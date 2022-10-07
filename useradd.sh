@@ -19,3 +19,4 @@ echo $pubkey >> /home/$username/.ssh/authorized_keys
 #sudo useradd -s /path/to/shell -d /home/{dirname} -m -G {secondary-group} {username}
 # sudo passwd {username}
 
+added new code for development
