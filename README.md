@@ -1,0 +1,2 @@
+# useradd
+bash useradd script
