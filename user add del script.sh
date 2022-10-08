@@ -12,10 +12,11 @@ declare -i choice # See [1]
 read choice
 if [ $choice -eq 1 ] 
 then
+    echo "Enter Username"
+
     read username
 
     if id -u "$username" >/dev/null 2>&1; then
-        echo "Enter Username"
 
         echo 'user already exists'
     else
