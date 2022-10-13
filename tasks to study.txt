@@ -1,0 +1,35 @@
+#get info on Puppetfile.lock
+    we have dependecies/packages already baked in amazon ami - of puppet Master
+
+
+#add repo to linux
+    https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/add-repositories.html
+List the installed yum repositories with the following command:
+
+    [ec2-user ~]$ yum repolist all
+
+To add a yum repository to 
+    nano /etc/yum.repos.d
+
+
+
+Add the repository with the yum-config-manager command.
+
+    [ec2-user ~]$ sudo yum-config-manager --add-repo https://www.example.com/repository.repo
+
+To enable a yum repository in /etc/yum.repos.d
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

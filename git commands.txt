@@ -1,0 +1,23 @@
+git commit --amend
+===========================
+
+# to tag and describe commits	
+	git tag v1 Commit_id
+	git describe
+
+# to move around in branches and rebase
+	git branch -f main HEAD~3
+	git branch -f main commit_id
+	git branch -f main 
+	git cherry-pick commit_id commit_id commit_id
+	git rebase -i HEAD~3
+	git rebase _i Branch_name
+
+#undo changes in git
+	git revert HEAD		#for online only
+	git reset HEAD~1	#for offline only
+
+
+
+
+

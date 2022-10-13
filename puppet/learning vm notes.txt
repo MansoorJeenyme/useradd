@@ -1,0 +1,284 @@
+#to check hiera data file
+	ruby -e "require 'yaml';require 'pp';pp YAML.load_file('./hiera.yaml')"
+
+
+
+# bolt istallation link
+	https://puppet.com/docs/bolt/latest/bolt_installing.html
+#Puppet code, a domain specific language (DSL)
+#Puppet code is a declarative language, which means that you describe only the desired state for your systems, not the steps needed to get there.
+# The Puppet agent runs on every system that you want Puppet to manage. The agent serves as the bridge between the system where it's installed and the Puppet server. The agent communicates in two directions: out to the Puppet server to see how its system should be configured, and then inward to native system tools to check the actual state of the system and to make changes to bring it in line with the desired state.
+# The Puppet server hosts an agent install script that makes it easy to install the Puppet agent on any system that can access the Puppet server.
+# study external node classifier for puppet
+	https://puppet.com/docs/puppet/7/nodes_external.html
+#pupet server
+	# Puppet server also hosts several supporting services such as the PE console services and PuppetDB.
+	# the Puppet agent service initiates a Puppet run every half-hour
+
+
+# puppet file system, each folder only contain one class
+	module/Class_folder/manifest/init.pp
+	module/Class_folder/files/
+		# files in this folder can be downloaded to all nodes
+		puppet:///modules/modulename/filename
+	module/Class_folder/templates/
+		# Templates output strings that can be used in files.
+		# templates can be called by 
+			  content => template('apache/vhost.erb'),
+	module/Class_folder/lib/
+
+
+# to generate a lifetime token,
+	puppet access login --lifetime 1d
+		# after this provide username and password of the agent.
+# to triget agent run from server	
+	puppet job run --nodes pasture-dev.puppet.vm,pasture-prod.puppet.vm
+
+
+
+sudo resize2fs -f /dev/xvda1
+xfs_growfs /dev/xvda1
+
+
+
+
+	#Bolt is an open-source remote task runner that automates the manual work that you do to maintain your infrastructure.
+	#Bolt connects directly to remote nodes with SSH or WinRM, so you are not required to install any agent software.
+	#Bolt is a powerful tool for performing tasks that are not as easily done with the Puppet agent, such as stopping a database server, performing a schema upgrade, and restarting the server.
+	
+#install puppet bolt
+	rpm -Uvh https://yum.puppet.com/puppet-tools-release-el-7.noarch.rpm
+	yum install puppet-bolt
+# Bolt provides a command-line interface for running commands, scripts, tasks and plans on the local machine or remote nodes. Now let's practice running some simple commands:
+	bolt command run 'free -th' --targets localhost
+# run command on host
+	bolt command run hostname --targets docker://bolt.puppet.vm
+# to get output of a file from node
+	bolt command run 'cat /etc/hosts' --targets docker://bolt.puppet.vm
+# Perhaps you want to generate machine-parseable output. That is also possible by using the --format option to the bolt command like so:
+	bolt --format json command run 'cat /etc/hosts' --targets docker://bolt.puppet.vm
+# puppet resource tool
+	quest begin hello_puppet
+	#install puppet agent on node
+		bolt command run "sh -c 'curl -k https://learning.puppetlabs.vm:8140/packages/current/install.bash | sudo bash'" --targets docker://hello.puppet.vm
+	# ssh into machine
+		ssh learning@hello.puppet.vm
+
+	# check resource details
+		sudo puppet resource file /tmp/test
+			#output will be 
+				file { '/tmp/test':
+				ensure => 'absent',
+				}				
+			#it explains
+				type { 'title':
+				parameter => 'value',
+				}
+				#type: is the kind of thing the resource describes. it can be user, file, service, or package, or a custom type 
+				parameter => 'value':  specify the state of the resource on the system
+		# now create the file
+			touch /tmp/test
+		# and check difference
+			sudo puppet resource file /tmp/test
+		# add data to file
+			sudo puppet resource file /tmp/test content='Hello Puppet!'
+		# and check
+			cat /tmp/test
+		# to install package	
+			sudo puppet resource package httpd ensure=present
+		# we can also choose provide for package
+			 sudo puppet resource package bogus-package ensure=present provider=gem
+		# exit vm
+			exit
+#pupet server
+	#server information
+		# Puppet server also hosts several supporting services such as the PE console services and PuppetDB.
+		# the Puppet agent service initiates a Puppet run every half-hour
+		# The Puppet agent begins a Puppet run by sending a catalog request to the Puppet server. This request includes some information about the agent system provided by a tool called Facter.
+		#  the Puppet agent generates a report that includes information about unchanged resources, successful changes, and any errors it may have encountered during the run. It sends this report back to the Puppet server, which stores it in PuppetDB and makes it available via the PE console's web GUI.
+		# Puppet requires any system contacting the Puppet server to authenticate with a signed certificate
+	# Make server - agent Connection
+		# first we will send request to server to connect via certificate
+			ssh learning@agent.puppet.vm
+			sudo puppet agent -t
+				# this will give an error as, puppet server has not authenticate the agent
+		# check certificate on puppet server
+			puppetserver ca list
+		# sign the certificate request made by agent to connect to server
+			puppetserver ca sign --certname agent.puppet.vm
+		# try to connect again with the server, see changes
+			ssh learning@agent.puppet.vm
+			sudo puppet agent -t
+	# site.pp is global configuration file of puppet , .pp files are the menifest files of puppet.
+	# edit site.pp so that it shows greetings when a node connects to puppet server 
+		vim /etc/puppetlabs/code/environments/production/manifests/site.pp
+			# enter following lines 
+			node 'agent.puppet.vm' {
+			notify { 'Hello Puppet!': }
+			}			
+		# now everytime node connects to server he will get a message "Hello Puppet!"
+			ssh learning@agent.puppet.vm
+			# to apply menifest
+			sudo puppet agent -t
+			exit
+# Creating a menifest
+	ssh learning@cowsay.puppet.vm
+
+	vim /tmp/hello.pp
+		notify { 'Hello Puppet!': }
+	sudo puppet apply /tmp/hello.pp 
+	# 
+	puppet config print modulepath
+		# it will provide you with the directories of modules
+		# first we will work on production enviroment directory
+		# it is better to validate your code before applying
+			puppet parser validate cowsay/manifests/init.pp
+# to test run you node, before actual running of menifest
+	ssh learning@cowsay.puppet.vm
+	sudo puppet agent -t --noop
+
+=====
+http://192.168.80.130/quests/package_file_service.html
+
+=====================================
+
+*************************************
+=====================================
+Packages, files, services in puppet
+
+*************************************
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	to install some service on a perticular node when he connects to server, we include that class into that vm in site.pp e.g if node is node1.puppet.vm
+			node 'node1.puppet.vm' {
+			include class_we_make_that_we_want_to_run
+			}
+		# to create a class, we first goto modules,
+			cd /etc/puppetlabs/code/environments/production/modules
+			#mkdir -p class_name/{manifests,files}
+			mkdir -p pasture/{manifests,files}
+			# the we create an init.pp menifest, in which we will declare class, which we are going to pull in site.pp. in this class we are installing a package.
+						class pasture {
+						package { 'pasture':
+							ensure   => present,
+							provider => gem,
+							}
+						}
+		# to include this class in site.pp, edit site.pp and define node at the bottom of file. 
+			node 'node1.puppet.vm' {
+			include pasture
+			}
+		-------Unit here we have just installed a package in node----
+		# now to add some config files to the node from server, we create config files
+			cd /etc/puppetlabs/code/environments/production/modules
+			vim pasture/files/pasture_config.yaml
+					---
+					:default_character: elephant
+			vim pasture/files/pasture.service
+					[Unit]
+					Description=Run the pasture service
+
+					[Service]
+					Environment=RACK_ENV=production
+					ExecStart=/usr/local/bin/pasture start
+
+					[Install]
+					WantedBy=multi-user.target					
+		# now we define these files in init.pp, edit init.pp
+						class pasture {
+
+						package { 'pasture':
+							ensure   => present,
+							provider => 'gem',
+						}
+						# we defined config file into the node
+						file { '/etc/pasture_config.yaml':
+							source => 'puppet:///modules/pasture/pasture_config.yaml',
+						}
+						# we defined config file into the node
+						file { '/etc/systemd/system/pasture.service':
+							source => 'puppet:///modules/pasture/pasture.service',
+						}
+						# we define that the service is running						
+						service { 'pasture':
+							ensure => running,
+						}
+
+						}
+		# now when we connect node1 aget to server it will install package pasture, and defice files from server and make sure that pasture service is running.
+=====================================================================================================================================
+Variables and template
+	# variables and templates for init.pp menifest for node
+	#in puppet variables are defined by $var_name
+	#puppet support two template extensions .eep and .erb, 
+	#to create template
+		vim pasture/templates/pasture_config.yaml.epp
+	# config.epp example
+			<%- | $port,
+				$default_character,
+				$default_message,
+			| -%>
+			# This file is managed by Puppet. Please do not make manual changes.
+			---
+			:default_character: <%= $default_character %>
+			:default_message:   <%= $default_message %>
+			:sinatra_settings:
+				port: <%= $port %>
+
+		# <% and %> are opening and closing tags of epp file
+		# - it removes empty spaces in start and end of line
+		# The <%= ... %> tags we use to insert our variables into the file are called expression-printing tags.
+	#This epp() function takes two arguments: First, a file reference in the format '<MODULE>/<TEMPLATE_NAME>' that specifies the template file to use. Second, a hash of variable names and values to pass to the template.
+	#To avoid cramming all our variables into the epp() function, we'll put them in a variable called $pasture_config_hash just before the file resource.
+			file { $pasture_config_file:
+				content => epp('pasture/pasture_config.yaml.epp', $pasture_config_hash),
+				notify  => Service['pasture'],
+			}
+
+		
+
+# to add classes in site.pp we need to goto modules folder, and create that class folder, then menifest and files sub folder. then create init.pp menifest, then we will be able to import this class into the site.pp menifest.
+	cd /etc/puppetlabs/code/environments/production/modules
+	mkdir -p pasture/{manifests,files}
+	vim pasture/manifests/init.pp
+	# class Create example
+		class pasture {
+		package { 'pasture':
+			ensure   => present,
+			provider => gem,
+			}
+		}
+	# to include this class into site.pp
+		vim site.pp
+			node 'pasture.puppet.vm' {
+			include pasture
+			}
+# goto nodes
+	# to run a service in background
+		pasture start &
+
+
+
+
+
+puppet init.pp file
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

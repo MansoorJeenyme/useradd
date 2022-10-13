@@ -1,0 +1,101 @@
+# if you are unable to run mongo commands, try changing the language
+	LC-ALL=C
+#we only give /data and /journal directories to mongo 
+# to install monog db
+	yum install mongo-db.org
+	# if it doenst install , then create mongo repo to download, or install external.
+		nano /etc/yum.repos.d/mongod-org-4.2.repo
+			enter repo information.
+# to check mongo
+	mongod
+# never run mongo from root user
+# to stop mongo
+	service mongo stop 
+	# always restart when you stop mongo
+		restart -o
+# to start monogo
+	mongod -f /etc/mongodb.conf
+# to start mongodb on startup 
+	chkconfig mongod on
+# to allow ip address to connect to mongo db
+	nano /etc/monogod.conf
+	# replace 127.0.0.1 with 0.0.0.0 to allow all ip address.
+# to edit mongo config
+	name /cat/mongo-config
+# to check mongo logs
+	tail -f /log/mongod-log
+# to show database run command
+	show db
+
+# monogdb replica set
+	#first setup three instances with monodb installed,
+		mongod
+		monogd --port 2717 --dbpath ~mongos/db1 --replSet ReplicaSet_Name
+	#login mongo primary
+		mongo --port 2717
+		# check status, it will show you there are no replset config received
+			ra.status()
+		# there are two ways to start a replset 
+			#by passing it in config file
+				/etc/mongod.conf
+					rs.add( { host: "mongodbd4.example.net:27017" } )
+			# by command
+				ra.initiate()
+				# there are two way to initiate replica set.
+					# by a complete command	
+						# https://www.mongodb.com/docs/manual/reference/method/rs.initiate/
+						rs.initiate(
+						{
+							_id: "myReplSet",
+							version: 1,
+							members: [
+								{ _id: 0, host : "mongodb0.example.net:27017" },
+								{ _id: 1, host : "mongodb1.example.net:27017" },
+								{ _id: 2, host : "mongodb2.example.net:27017" }
+							]
+						}
+						)
+					# second initiate replicaset on primary, then adding nodes in primary	
+						rs.initiate()
+						# this will make node primary
+						# to add secondary replsets, we need to add nodes
+							rs.add("ip_address_or_domain_name_of_node")
+							rs.add( { host: "mongodbd4.example.net:27017", priority: 0 } )
+							rs.add( { host: "mongodbd4.example.net:27017", priority: 0, hidden: true } )
+							rs.add( { host: "mongodb3.example.net:27017", arbiterOnly: true } )
+	# to check status of nodes
+		rs.status()
+		# do check timestamp of all nodes, difference should me not more than 10.
+		# timestamp is the number of enries in database.
+	# if in status there is no primary node.run command
+		rs.slaveok()
+
+# mongod troubleshooting
+    # if mongo goes in down state, it locks its database and tansfer permission to root
+    # turn off all nodes
+    # turn on primary, enter as root 
+        mongod --repair
+            # clear if it shows any error
+        # then one by one bring all nodes back up
+    # if you dont know which one is primary, login to one node
+        rs.slaveok()
+        mongod --repair
+        # repair db and remove it from replca set. then add again with max priority.
+            rs.remove( { host: "domein_name_of_current_node:27017"} )
+            rs.add( { host: "domein_name_of_current_node:27017", priority: 0 } )
+            
+    # Amazon linux-1 has three places where hostname is added, for hostname to resolve again, we have to remove it from all three places.
+        fast dns resolution service 
+        /etc/hosts
+        /etc/hostname
+        /etc/sysconfig/network
+
+
+
+
+
+
+
+
+
+

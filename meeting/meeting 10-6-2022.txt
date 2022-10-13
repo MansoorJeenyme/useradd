@@ -1,0 +1,81 @@
+git
+	create branch
+	create PR
+Puppet
+	Learn Vm
+	#we have already defined puppet roles.
+mongo db
+
+
+Linux=>api.jeeny.me
+	Mongo db
+	Nginx>php-pm(compiler)
+		eastTaxi + dependecies
+
+we have almost 24-40 vm running at the moment.
+-------------------------------------
+10/6/2022
+	create a cluster
+	
+bitbucket
+	it is used for staging.
+when ever=>	roles: class mongomen
+==
+goto amazon to apply roles
+	ec2=>mongomem => launch more like this
+				how to decide which size of ec2=> check previous ec2
+use private subnet1 and 2 and 3
+vpc 10.0.0.0
+security group = private-group sg-9aca
+advanced
+	script
+update puppet server in jenkins
+	then update role in script- -in amazon bash
+	where to find hostname
+	override hostname
+--------
+ssh -j imran@bastion.jeeny.me ec2-user@private_ip_of_cluster
+
+tail /var/log/cloud-init-output.log
+
+#to remove mongo error
+	export LC_ALL=C
+why mongo is locked
+	cd /data/
+	ls -ltra
+	service mongod restart
+	mongo
+
+======
+goto route 53=>
+	internel.easytaxt_complete address
+		hostedzone
+		define simple record=> provide servername
+		route traffic=> enter private ip
+			create record
+
+
+ssh imran@bastion
+#now we are in our internal db
+	curl mongo_server_dns_server_address :27017
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

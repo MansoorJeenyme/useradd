@@ -1,0 +1,56 @@
+
+
+#install puppet bolt
+	rpm -Uvh https://yum.puppet.com/puppet-tools-release-el-7.noarch.rpm
+	yum install puppet-bolt
+# run command on host
+	bolt command run hostname --targets docker://bolt.puppet.vm
+#install puppet agent on node
+	bolt command run "sh -c 'curl -k https://learning.puppetlabs.vm:8140/packages/current/install.bash | sudo bash'" --targets docker://hello.puppet.vm
+# to install package	
+	sudo puppet resource package httpd ensure=present
+# we can also choose provide for package
+	sudo puppet resource package bogus-package ensure=present provider=gem
+
+# Sign certificate of server
+	# check certificate on puppet server
+		puppetserver ca list
+	# sign the certificate request made by agent to connect to server
+		puppetserver ca sign --certname agent.puppet.vm
+	# connect server through agent, open client through ssh
+		sudo puppet agent -t --noop		# test run agent connect 
+		sudo puppet agent -t
+# to run menifest  
+	sudo puppet apply /tmp/hello.pp
+# to validate menifest file
+	puppet parser validate pasture/manifests/init.pp
+
+
+
+http://192.168.80.130/quests/package_file_service.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

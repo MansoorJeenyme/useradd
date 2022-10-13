@@ -1,0 +1,93 @@
+# for puppet to run we need fully resolved dns, so we add fake dns to /etc/hosts
+    # only puppet master needs to be added to both server an client
+# agent and server both need to have each others address to communicate
+
+server
+    sudo apt-get update -y
+    sudo nano /etc/hosts
+        192.168.80.11 puppet-master.local puppet-master
+        master_ip_address puppet-master.local puppet-master
+        192.168.80.12 puppet-client.local puppet-client
+        # test hostname
+            hostname -f
+
+
+    #install puppet master 
+        wget https://apt.puppetlabs.com/puppet6-release-focal.deb
+        sudo dpkg -i puppet6-release-focal.deb
+        sudo apt-get update -y
+        sudo apt-get install puppetserver -y
+    #open puppet master config
+        sudo nano /etc/default/puppetserver
+        #change ram to 1gb
+            JAVA_ARGS="-Xms1g -Xmx1g -Djruby.logger.class=com.puppetlabs.jruby_utils.jruby.Slf4jLogger"
+
+    # start service
+        sudo systemctl start puppetserver
+        sudo systemctl enable puppetserver  # to make sure it runs on bottom
+        sudo systemctl status puppetserver
+
+client
+{#try this , by not definig clients on host
+    set-hostname puppet # on server
+# do try by only giving puppet master host in host file
+    sudo nano /etc/hosts
+        master_ip_address puppet puppet-master  }
+
+    sudo apt-get update -y
+    # add puppet master info in client
+        sudo nano /etc/hosts
+            192.168.80.12 puppet-client.local puppet-client
+            client_ip_address puppet-client.local puppet-client
+            192.168.80.11 puppet-master.local puppet-master
+    wget https://apt.puppetlabs.com/puppet6-release-focal.deb
+    sudo dpkg -i puppet6-release-focal.deb
+    sudo apt-get update -y
+    sudo apt-get install puppet-agent -y
+    sudo nano /etc/puppetlabs/puppet/puppet.conf
+        # add information
+            [main]
+            certname = puppetclient
+            server = puppetmaster            
+    #start service
+        sudo systemctl start puppet
+    sudo systemctl enable puppet
+    sudo systemctl status puppet
+    # run first command so that it send certificate to server
+    sudo /opt/puppetlabs/bin/puppet resource service puppet ensure=running enable=true
+        # this will send certificate to server, with the hostname of this slave.
+    
+
+# goto master to sign certificate
+
+master
+    # list certificates and sign them
+        sudo /opt/puppetlabs/bin/puppetserver ca list --all
+        sudo /opt/puppetlabs/bin/puppetserver ca sign --all
+        sudo /opt/puppetlabs/bin/puppetserver ca sign client_hostname
+    # check master - agent communication
+        sudo /opt/puppetlabs/bin/puppet agent --test
+
+
+
+# to download puppet module in server from puppet forge
+    cd /etc/puppetlabs/code/enviroments/production/
+    /opt/puppetlabs/bin/puppet module install puppetlabs-apache --version 1.11.0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

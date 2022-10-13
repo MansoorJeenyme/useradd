@@ -1,0 +1,54 @@
+flow of puppet files and variables
+# first we define variables(parameters) in class, then export them to templaes.
+    vim pasture/manifests/init.pp
+
+class pasture (
+  $port                = '80',
+  $default_character   = 'sheep',
+  $default_message     = '',
+  $pasture_config_file = '/etc/pasture_config.yaml',
+  $sinatra_server      = 'webrick',
+){
+  $pasture_config_hash = {
+    'port'              => $port,
+    'default_character' => $default_character,
+    'default_message'   => $default_message,
+    'sinatra_server'    => $sinatra_server,
+  }    
+
+# then we import these parameters in templates
+    vim pasture/templates/pasture_config.yaml.epp
+
+<%- | $port,
+      $default_character,
+      $default_message,
+      $sinatra_server,
+| -%>
+# This file is managed by Puppet. Please do not make manual changes.
+---
+:default_character: <%= $default_character %>
+:default_message:   <%= $default_message %>
+:sinatra_settings:
+  :port:   <%= $port %>
+  :server: <%= $sinatra_server %>
+
+
+
+
+=========
+puppet if statement
+
+if $::osfamily == 'RedHat' {
+  ...
+  $apache_name = 'httpd'
+  ...
+} elsif $::osfamily == 'Debian' {
+  ...
+  $apache_name = 'apache2'
+  ...
+}
+
+
+
+
+

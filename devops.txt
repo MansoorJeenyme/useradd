@@ -1,0 +1,2092 @@
+why we need devops 
+	fast delivery of project=> 
+	Higher Quality
+	less capex(capital expenditure) + Opex (operation expenditure)
+	Reduce Outage
+	
+	terms to understand
+		client loaction = on-site
+		developer location = off shore
+
+
+----------------------------------
+when a companey get a project
+	steps of creating an application/website
+	Developers are hired,
+	Developer write a code
+	code is build 
+	then build is tested
+	after testing is complete , application is send to quality assurance.
+	Quality( app is userfriendly, good interface, not complex)
+	project manager run app on companey server, and tested by testing user.
+	app deployed on-site on client-side.
+	Maintainence
+	Employee Training
+	Monitoring
+	also known as software development life cycle (SDLC)
+-------------------------
+above method is old, also known as waterfall method, or step by step method.
+
+agile method 
+
+------------
+
+What is DevOps
+ Implementation of automation at each and every stage
+ Four stages of DevOps
+  Version control : git
+  Continuous implementation : Jenkins
+  Continuous delivery: Maven
+  Continuous department: chef,dockers,kubernate. 
+  This whole process is known as cicd
+  Cicd: continuous implementation continuous delivery 
+
+DevOps is a methodology. Not a technology.
+Waterfall =>agile => DevOps
+
+
+agile methology => build app in short parts and get approved by client
+	build short, build often
+		e.g an ecommerce website
+		sprint 1 => login, logout page
+		spirint 2=> product listing
+		sprint 3=> dashboard
+		spirint=> payment system
+	this whole process is known as scrum. e.g, one part is developed and get approved by client, then other part is developed.
+	
+
+----------------------------
+ls -la /etc/sudoers	- to check who has sudo access
+nano /etc/sudoers	- to add give sudo privilege to users
+
+
+Linux file system
+
+
+
+Windows/ Linux
+C:\    /
+
+Important directory of Linux
+/ = root directory
+/Root = it is for root user( home directory of root user)
+/Home = other than root user( home directory of other than root user)
+/Home/username
+/Boot = Contains bootable files of Linux
+/Etc = It contains all configuration files
+/usr = by default all packages install in usr
+/bin = it contains all commands that user and root user could run
+/Sbin = (system binary) it contains all commands that only root user can run
+/Opt = optional packages install here
+/Dev = (devices) it contains files of devices like printers 
+-----
+
+Create file
+Cat > Filename
+    Ctrl+D to exit
+
+Cat Filename (to view content of file)
+
+Why we use cat
+ To merge multiple files.
+  Copy data of files
+  tac = to inverse file
+
+Cat >> filename ( To append something in file)
+Cat > file1 file2 > File3 ( merge files)
+
+Touch file1 file2 file2 (to create empty file)
+Touch add timestamp to the file
+Acces time, modified time, Meta data change time
+
+Stat filename ( to check timestamp)
+Touch -a filename 
+Touch -m filename(modified time)
+
+
+Vi
+:Wq( save quit)
+:X
+:w (to save)
+:Q
+;Q! Forcefully quit
+
+
+Nano
+------------------------------
+Mkdir Dir1/dir2/dir3 (create multiple directory)
+Pwd
+Cd ../../.. ( To come out of multiple directories)
+
+Hide file/directory 
+Rename .filename
+Mkdir .dirname
+
+Ls -a (list all)(to show hidden files)
+Copy
+CP source destination
+Move
+MV Source destination
+Rename is also done by MV command
+
+Remove file/directory
+Rm -rf filename( forcefully delete)
+Rm -r (remove empty directory)
+
+
+Rmdir directoryname (Empty directory)
+Rmdir -p ( remove parent and child directory)
+Rmdir -pv
+
+Head
+Tail
+Less
+More
+
+--------------
+Hostname (info of machine)
+Ifconfig (IP of machine)
+Hostname -i (IP of machine)
+Cat /etc/os-release (to check info of os)
+
+Yum install httpd -y
+Yum remove httpd
+Yum update httpd
+
+Service httpd start
+Service httpd status
+
+Chkconfig Httpd on (app run start on startup)
+
+Yum list install
+Which httpd (to check if httpd is installed or not)
+
+Whoami (which user are you, e.g root or user)
+
+Echo "hello" > file1
+Create file with echo command
+Echo "hello again" >> filename ( append hello again in file1)
+
+Echo > file1 ( this will empty the file)
+
+Tree 
+
+Grep (Similar to find)
+Grep word /etc/passwd ( this will find word in file2)
+
+Sort(it will show output of file in alphabetical order)
+----------------
+
+Useradd username
+To check if user is created or not
+Cat /etc/passwd
+
+Groupadd groupname 
+Cat /etc/group (to check if group is created or not)
+
+To add user in existing group
+Gpasswd -a(to add single user) username group name
+Gpasswd -M(to add multiple users) user1,user2 groupname
+
+Ln (hard link) (its use is to create backup copy of file)
+Ln file1 backupfile1
+
+Ln -s (soft/short link)
+Ln -s Filename linkname
+
+
+Tar (group multiple files)(WinZip)
+Gzip (to compress tar file)
+
+Tar -cvf dirx.tar dir_name
+Gzip dirx.tar (output = dirx.tar.gz)
+
+Gunzip dir.tar.gz (to uncompress)
+Tar -xvf dirx.tar (to ingroup files)
+
+Wget URL (to download file from internet)(it downloads file in background)(file downloader)
+
+---------------
+
+Chmod (to change permission of file/folder for user)
+Chmod 777 filename
+File permissions
+-rwx r-x r-- (Owner group others)
+--rwx r-x r-- root root (owner group)
+Another method
+U =rwx (update)
+U+w (add permission)
+O+X (add executive permission)
+Chmod u=r,g=rwx,o=+X filename
+
+Change ownership
+Chown username file1
+Change group
+Chgrp Groupname file1
+
+-------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------
+
+Git
+Source code management
+1. Centeralized 
+  Cvcs
+3. Distributed version control system
+Git
+ Git has one copy in local (Repository) pc, then upload it to remote repository(GitHub)
+
+ -----
+
+Install git in ec2 machine
+Create directory Mumbai git
+
+Run command git init
+This will create a hidden file.git
+It will convert Directory into git repository,
+And make three logical boundary in this  repository
+
+1 working area
+Staging area (add area)
+Local repo (commit) (local branch) also known master branch
+Then push code into GitHub repository
+Then to download code we pull code
+
+
+When we write some code it stays in working area, after that we add  it in staging area, purpose of staging area is to Short list files which we want to commit,
+After when we finalize the code, we commit  it.
+When we commit code. It get an id. It is known as commit Id. We can also put tag to commit Id e.g login changes .
+
+After code is commited of local repository, we can put it on remote(central) repository, gitlab.(bare repository)
+This process is called push code.
+
+Branch concept in git
+Merge branches of code
+----------
+Git laB
+Create two machines , one in Mumbai, one in Singapore
+Make 2 different git accounts in machines.
+
+Sudo su
+Yum update -y
+Yum install git -y
+Which git
+Git --version
+Git config --global User.name "Mansoor"
+Git config --global user.email "mansoor@gmail.com"
+
+Git config --list (to check configuration)
+Git config --global --list (to check configuration)
+
+Create GitHub account
+Goto repository and create repository
+
+---------------
+Git lab 2
+Login machine using putty
+Create a directory
+Git init
+Touch myfile(write some code)
+Git status(Status of repository)
+Git add .(add all files to staging area)
+Git commit -m "message"
+Git status
+Git log (it logs who commit the code at which time)
+Git show Commit-id ( it shows What code did each person write)
+
+To upload code to git repository
+Git remote add origin URL(repository link)
+Git push -u(user) Origin Master(branch name where u want to push code)
+After this command it will ask for username and password
+
+----
+Mkdir Mumbaigit
+Cd Mumbaigit
+Git init
+Cat > mfile1
+Add some code
+Ctrl+d
+Git status
+Git add .
+Git status
+Git commit -m "my first commit from Mumbai"
+Git status
+Git log
+Git show Commit-id
+
+Upload to GitHub
+Open GitHub
+Login
+Create repository
+Copy URL
+Git remote add origin URL
+Git push -u Origin master
+
+
+Singapore
+Git init
+Git remote add origin URL
+Git pull -u origin master
+
+----
+Important git commands
+Create a hidden file .gitignore
+
+.gitignore 
+Write *.CSS Or *.txt in this file , this will ignore these extension file and will not commit these files.
+
+First we need to add ignore file into local repo, then it will start working
+Git add .gitignore
+
+Git log -1 (it will show last line of log)
+Git log -2
+Git log --oneline
+Git log grep "message to search in git log" (this will search message in log)
+
+-----------------------------------------------
+git branches
+the first branch created is known as master branch
+why we use brances
+	we can do parallel working in code.
+	and it keeps master branch error free.
+	
+	when we create a branch, it creates the same copy of master branch
+
+
+merge branch
+	it copies the only newer code into the master code.
+
+LAB
+sud su
+goto local repository
+	git log --oneline (to check all previous commit in one line)
+	
+		(to check on which branch we are working)
+		(branch having * will be master branch/current branch)	
+	git branch 
+
+to create new branch
+	git branch new_branch(branch name)
+to get out of master branch and enter new_branch
+	git checkout new_branch
+delete branch
+	git branch -d new_branch
+	git branch -D(forcefully delete) new_branch
+
+
+
+
+
+------
+it is better to switch to master branch then merge branch
+
+git merge new_branch (it will mege new_branch in master branch)
+	if there is a conflict, it will show message, fix conflic and then commit. 
+	it will also show he name of the file having conflict.
+git status
+git add .
+git commit -m "conflict resolved"
+git push orign master (push repository to web)
+
+---------
+when there is a git conflict
+when we merge two branches , there is sometime a conflic in code.
+e.g master and branch both has file1, and data is similer.
+
+how to remove conflict
+	 vi file1
+		edit file and remove conflict manually.
+-------------
+git stashing
+
+
+git stash (it will stash the modefied file)(multiple files can be stashed)
+git stash list (to check the list of stash files) 
+git statsh apply stash@{0} (to get the latest file back from stash to working directory)( 0 is the latest file)
+(once we get data from statsh, it also stays in stash, we have to delete it manually)
+git statsh clear
+--------------------------------
+git reset command
+(git reset will clear staging area)
+git reset filename
+git reset .
+git reset --hard(it will reset staging area and both working area)
+-----------------------
+
+Git revert gid-id
+It will reset the git commit. And bring back the previous git b4 last commited.
+
+To clean untracked files
+Git clean -n (it will ask files names before deleting)
+Git clean -f( it will delete without asking)
+
+Tags and their use
+Git Tag -a <tagname> -m "message" commit-id
+To see list of tags
+Git tag
+Git tag -d <tagname> (to delete tag name)
+Git show <tagname>
+
+----
+Colne git
+Git clone Url (it will create same repo as available on github)
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+Chef
+
+
+It is a configuration management tool
+There are Two types of CMT
+Push base
+ It is a server that has all the config saved. That is updated on all the server connected to it.
+ It will push configuration to all servers connected to it , Whenever there is an update.
+ Ensiblae and salt stack are push based CMT 
+ 
+Term: infrastructure as a code (we write code which , automate the construction of infrastructure, e.g installation of application)
+
+
+Pull base
+In these kind of tools , server will not tell clients to update.clients will periodically check for updates.
+Chef and puppet are pull based 
+
+
+Chef is an administrator tool
+
+
+Chef architecture process
+Code is written on workstation in ruby
+Cookbooks are available @ chef supermarket
+Chef is installed on both the workstation and nodes 
+1. Workstation
+ It contains all the code of installation of application (also known as recipie)
+ Cookbook ( the folder that contains all the recipes)
+
+3. Chef server
+ Cookbook is stored (uploaded) in server, not in workstation.
+The tool that upload cookbook from workstation to chef server is known as knife 
+Knife: also connects server with nodes.
+
+Connection of server to nodes , this process is called bootstrap.
+5. Nodes
+When we install chef on nodes 
+We get chief client. And ohie 
+Ohie is a database (Current configuration of machine is stored in ohie)
+
+Term:itempotency ( only updated code is downloaded by nodes)
+
+-------
+Install Chef workstation on Linux (aws machine)
+Create directory cookbook(directory name must be cookbook) on workstation
+Create subdirectory (Cookbook inside a cookbeek)
+
+Lab
+Download package from chef.io
+Get download link of chef
+Use wget to download chef (rpm file)
+Now yum install (filename)
+To check if chef is installed 
+Which chef
+---
+
+When we create chef cookbook some files created automatically
+
+Chef ignore
+Spec (it test components)
+Test (test overall code)
+
+----
+Always create a root cookbook and then create cookbooks inside this book.
+To check cookbook use command tree (first install tree package)
+Another point to remember is , we create a recepie inside a cookbook. But when we have to edit this recepie , we go out of this cookbook , and goto root cookbook and there , run vi path of recepie.
+
+
+
+
+To create cookbook Command
+Chef generate cookbook ABC(cookbook name)
+Chef generate recepie abc
+
+To check recepie file code
+Chef spec ruby -c file_path
+
+To run recepie (manually)(on local machine)
+Chef-client -zr(zr is local machine runlist) "recepie_path" 
+
+----
+Recepie for installation of a software
+Create a 2.rp inside a cookbook
+Goto root cookbook
+Edit file
+Package "Tree" do
+Action :install
+End
+-----
+
+What are resource in recepie
+Package
+Service
+User
+Group
+Template
+Cookbook file
+File
+Execute
+Directory
+Cron
+----
+==================================================================
+-----------------------------
+Chef lab
+Open EC2 SSH
+Sudo su
+Yum update
+Yum install tree
+(Get download link of chef workstation link , for redhat from website)
+Wget URL (chef link)
+Yum install Chef_filename
+Mkdir cookbooks
+Cd cookbooks
+Chef generate cookbook test-cookboob(cookbook_name)
+Tree(to check files in cookbook)
+Cd test-cookbook
+Chef generate recepie test-recepie(recepie name)
+Cd ..
+Nano test-cookbook/recepies/test-recepie.rb
+(Copy and paste , code of creating a file here)
+(To check this recepie)
+Chef exec ruby -c test-cookbook/recepies/test-recepie.rb
+(To run recepie manually)
+Chef-client -zr "test-cookbook/recepies/test-recepie.rb"
+Run an Apache server in EC2using chef
+-----
+Chef attributes
+These are key and values
+Attribute types in ruby
+Default
+Force default
+Normal
+Override
+Force override
+Automatic (it is defined in ohie)(it has the highest priority)
+
+----
+
+Get node basic info script from YouTube description
+------
+
+CODE USED IN THIS LAB****
+
+file '/basicinfo' do
+ content "This is to get Attributes
+ HOSTNAME: #{node['hostname']}
+ IPADDRESS: #{node['ipaddress']}
+ CPU: #{node['cpu']['0']['mhz']}
+ MEMORY: #{node['memory']['total']}"
+ owner 'root'
+ group 'root'
+action :create
+end
+
+----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---------------------------
+docker
+---------------------------
+Docker is similar to virtualization, but without the installation of OS,
+Instead of creating a virtual machine, it create containers.
+It get dependencies from dockerhub.
+Docker download all dependencies , but chef install and configure the dependencies.
+-----
+docker limitation
+donot support cross platform. e.g cannot run ubuntu image on redhat.
+dockers is not recommended for rich GUI apps.
+its is recomended to win7 image on win 7 , bot on win 8
+
+----------------
+
+O.S Level Virtualisation in Docker
+
+docker engine only runs in linux
+docker is a platform as a service
+
+----------------------------------
+
+docker 
+first developer create a files, docker file
+in this file all dependencies are mentioned.
+then this docker file is executed, when executed it download all dependencies into a container,
+then container is run on machine.
+
+----
+when we want a already created image from docker hub
+we pull this image from docker hub
+---
+container is made from image
+-----------
+docker is a layered file system
+what is layered file system
+it means it does all steps in layers. e.g first install os, then 1st, then 2nd app....etc
+---------------------------------
+
+
+Docker is an eco system (it provides all the necessary tools to run an app)
+Docker client( it is an app where er write our code)(we do all work on client , not on server)(one client can communicate with multiple servers)
+Docker server/demon (Docker engine)(it will run your image)(it runs on host os)
+Docker hub (docker registry)(it has all the images)(online directory)-(public registry/private registry)
+Docker compose( it help manages multiple images)
+Docker host( it provides the environment)
+
+---
+How to create docker image
+3 ways
+
+1 -download from dockerhub
+2- create from docker file (write complete code in a file which dependencies are required, Run this file through client, docker engine will create an image from this config file.
+3- create image of an existing container.
+--------
+===============
+docker lab
+docker commands
+
+yum install docker -y
+docker images	- to show images, available on the machine.
+docker search jenkins	- it will search jenkins image on dockerhub
+docker pull junkins	- it will pull image from dockerhub
+docker run -it --name ubuntu /bin/bash	- run = create+start(i=interactive means you wanto to work on this container)(t=terminal)(--name{optional} if you want to give name to container) 
+service docker status	- to check docker service
+docker start ubuntu	- to start a stopped container
+docker attach ubuntu	- to enter container
+docker ps -a	- to check all containers created in machine
+docker ps	- to see only running conatiner
+docker stop ubuntu	- to stop a running conatiner, u must come out of container first.
+docker rm ubuntu	- to remove container.
+
+
+docker run -it ubuntu /bin/bash	- container created and we entered in container
+cat /etc/os-release	- to check container version, from inside container
+exit
+
+docker diff mansoor - to check what changes we made in container, realted to orignal image
+				- C = Change, A = Append , D= Deleteion
+docker commit mansoor image_name	- to create image of your container
+
+---------------docker file-------
+docker file is used to create docker image.
+
+FROM	- base image (this command is always on top)
+RUN	- to execute commands, it will create layers in image
+MAINTAINER	- Author/owner name
+COPY	- copy any files from local machine  
+ADD	- it download files from internet and also extract them.
+EXPOSE	- to open port
+WORDIR	- it is used to go to the directory, when container is created.
+CMD	- Execute command during container creation.
+ENTRYPOINT	- similer to CMD but have higher priority, in execution
+ENV	- enviroment variable, myname = mansoor, it will replace every myname to mansoor.
+ARG	- 
+
+image LAB----
+Create dockerfile	
+	Nano Dockerfile
+	FROM ubuntu
+	RUN echo "test notes" > /tmp/testfile
+create image from docker file. in same directory of docker image
+	docker build -t myimage .	- -t is for tagname, . is for current directory.
+
+	docker run -it myimage
+now test if we have /tmp/testfile
+	docker run -it myimage --name mansoor /bin/bash
+------------------------
+iamge lab-2
+create Dockerfile
+	FROM ubuntu
+	WORKDIR /tmp
+	RUN echo "abc" > /temp/file1
+	ENV myname mansoor
+	COPY testfile /tmp
+	ADD test.tar.gz /tmp
+now create some file in same filder
+	touch testfile
+	touch testfile1
+	tar -cvf test.tar Current_folder_name
+	gzip test.tar
+--------------------------
+docker volume----
+volume is a directory that can be shared with other containers, once created it will be automatically visible to other containers.
+volume is a simple directory, declared as volume
+we create volume when we write Dockerfile.
+if container is deleted, volume doesnt get deleted.
+it can also be created by command.
+it can also be shared host to container.
+==================
+--volume lab---to create volume from Dockerfile
+Edit Dockerfile
+	FROM ubuntu
+	VOLUME ["/myvolume"]	- volume is declared.
+to share volume with other containers(container can only be get shared if we declare it during creation of new container)
+	docker run -it --name newcontainer --privileged=true --volumes-from container_name ubuntu /bin/bash	
+----To create volume with command
+first create a container
+	docker run -it --name cont1 -v /volume_name ubuntu /bin/bash
+----host to container volume share--
+first create a shared folder in your ec2 home directory
+	docker run -it --name container1 -v /home/ec2-user/shared:/sharedvol --privileged=true ubuntu /bin/bash
+	=====================
+other commands
+	docker volume ls	- list locally created volumes
+	docker volume create volume_name	- to create volumes in local machine
+	docker volume rem volume_name
+	docker volume prune	- delete unused volume
+	docker volume inspect volume_name
+	docker container inspect container_name
+to stop all running container
+	docker stop $(docker ps -a)
+delete all containers
+	docker rm $(docker ps -a -q)	- -q will quit all containers
+forcefully delete containiers
+	docker rmi -f $(docker images -q)
+===============================
+--docker expose port
+how user from internet can access docker container.
+	expose command only make ports available to internal container only, -with -p it is available globally
+	docker run -d --named techserver -p 80:80 ubuntu 	- -d means just demon(create container but do not enter it) -p override expose
+	docker run -d --name techserver -p ec2-port:container-port ubuntu
+	docker port techserver	- to check ports exposed of a container
+	docker exec -it techserver /bin/bash	- exec will start a new process and enter container
+=========
+docker hub
+	docker login	- provide username and password of docker hub
+	docker tag image_name docker_hub_id/image_name(name of image to be uploaded on docker hub)
+	docker tag local_image_name docker_user_id/
+	docker push dockerid/image_name
+	docker pull dockerid/image_name
+=========================================================
+===================
+ansible
+	ansible is agent-less, no need to install any agent on nodes. it works through ssh.
+	ansible has playbook - term for code
+	ansible uses push mechanism
+ansible terms
+	Ansible server	- where we create code(playbook), and it push it to nodes
+	Modules	- commands
+	Task	- 
+	Role	- 
+	Fact	- 
+	Invertory	- how much server are joined to us 
+	Play	- Execution of playbook
+	Handlers	-
+	Notifiers	- 
+	Playbooks	- 
+	Host	- 
+----
+ansible lab
+	create one ansible server
+	wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+	yum install epel-release-latest-7.noarch.rpm
+	yum install package_name
+	yum update
+	yum install git python python-level python-pip openssl ansible -y	- install ansible dependensies
+	nano /etc/ansible/hosts	- edit host file in ansible server, add private ip of nodes, also known as invntory file.
+		create group and add private ip of nodes.
+		# Ex 1: Ungrouped hosts, specify before any group headers.
+		[developers]
+		172.31.17.121
+		172.21.42.212
+		[testing]
+		172.21.42.190
+edit config file
+	nano /etc/ansible/ansible.cfg
+		uncomment inventroy
+		uncomment sudo_user
+
+-------------------------repeat these steps on host and nodes also.-------------------
+add users in host
+	adduser ansible
+	passwd ansible	- enter password
+add users on nodes also
+switch user to ansible on host and nodes
+	su - ansible
+goto host terminal make ansible a sudo user
+	visudo	- find ## allow root to run commands anywheere
+		ansible ALL=[ALL] NOPASSWD: ALL	- enter this value in file
+	nano /etc/sudoers
+		ansible ALL=[ALL] ALL	- enter this value in file
+	nano /etc/sudoers
+		ansible ALL=[ALL] NOPASSWD: ALL	- enter this value in file
+
+how to push command to nodes, first login to nodes and host as ansible user
+	su - ansible	- on host
+	ssh private_ip_of_node	- it will not allow, so we need to change ssh configuration
+	nano /etc/ssh/sshd_config	- uncomment #PermitRootLogin yes, #PasswordAuthentication yes, and comment PasswordAuthentication no,  repreat on both nodes also.
+	service sshd restart	- on host and nodes also
+	ssh ansible@private_ip_of_node	- enter password
+now we have access of nodes from 
+
+-------------------------repeat these steps on host and nodes also.-------------------
+to automate update process, we creata a public-key in host, and copy it to all nodes. it is also known as trust relationship.
+to generate key, you must first su - ansible	
+	ssh-keygen	- press enter 	- it is in root folder
+	ls -a
+	cd .ssh	- you will find id_rsa.pub, .pub is public key, now we will copy this public key to all nodes
+to copy public id to nodes.	
+	ssh-copy-id ansible@private_ip_of_node
+to test 
+	ssh private_ip_of_node
+now we have access to nodes without password
+------------------
+host patterns
+
+ansible all --list-hosts	- to check how many nodes are connected
+ansible group_name[0] --list-hosts	- it will only show info of first node,of group
+ansible group1:group2 --list-hosts
+
+
+----
+to push commands to nodes we have 3 ways
+adhoc commands	- simple linux commands
+modules	- one single command
+playbooks	- more than one modules is known as playbook
+
+adhoc commands syntax
+	ansible group/all -argument "linux command to execute"
+	ansible all -a "touch filename"
+	ansible group_name -a "sudo yum install httpd -y"
+	
+modules commands
+	ansible group_name -b -m module_name -a "pkg=httpd state=present"
+	ansible developer -b -m yum -a "pkg=httpd state=/present/absent/latest"	
+	ansible dev -b -m yum -a "pkg=httpd state=present"
+start service		
+	ansible developer -b -m service -a "name=httpd state=started"	
+create user
+	ansible developer -b -m user -a "name=mansoor"
+copy
+	ansible developer -b -m copy -a "src=file dest=/tmp"
+to get details of all nodes
+	ansible developer -m setup	- it will show all configuration of nodes connected
+	ansible develoepr -m setup -a "filter=*ipv4*"	- it will show only ip addresss of nodes.
+
+	https://www.youtube.com/watch?v=uyFrrKju4Es&list=PLBGx66SQNZ8aPsFDwb79JrS2KQBTIZo10&index=34
+===----------------------===
+nod configuration
+	create user ansible, add ansible to sudoers, change configuration of sshd file.
+host configuration
+	download ansible, install ansible, yum update, install dependencies, make username ansbile, add ansible to sudoers, login as ansible ,change configuration of ssh config file, generate ssh-key, transfer ssh-key to nodes, change config of ansible configuration, add hosts in hosts file, start pushing commands to nodes.
+===------------------------===
+playbook have three parts first we select
+	target section: define hosts
+	variable section: 
+	task section: 
+
+how to we write YAML
+	yaml starts with list(key-Value pair)
+	yaml starts with --- and ends with ...
+	indentations is requred like pyhton
+	there should be a space after : e.g (name: mansoor)
+	how do we write lists		Fruits:
+						-manego
+						-banana
+	Dictionery
+		its a key: value formta
+
+-----------playbook--------------------
+create playbook.yml	- always use vi to create playbook
+	--- # comments one line
+	- hosts: dev(group_name)/all
+	  user: ansible
+	  become: yes	- this makes ansbile sudo user
+	  connection: ssh
+	  gather_facts: yes
+to run a playbook
+	ansible-playbook playbook_name.yml
+create an advanced playbook task.yml
+	--- # single line comment
+	- hosts: all
+	  user: ansible
+	  become: yes
+	  connection: ssh
+	  tasks:
+		- name: name/description of task
+		  action: yum name=httpd state=present
+create antoher playbook with varable: always define variable before task
+	  var: 
+		pkgname: httpd
+	  task:
+		- name: desciption
+		  action: yum name:'{{pkgname}}' state=present
+
+--------------------------------------
+handlers
+it is same as task, but it is called by another task
+for exampler, install httpd then start httpd.
+	task:
+		- name: desciption
+		  action: yum name:httpd state=present
+		  notify: restart httpd
+	handles:
+		- name: restart httpd (it sould be same as notify in task)
+		  action: service name=httpd state=restarted
+		     
+DRYRUN
+	it is to check playbook. 
+	ansible-playbook playbook.yml --check
+Loops
+	tasks:
+		- name: add users in nodes
+		  user: name='{{item}}' state=present
+		  with_item:	
+			- user1
+			- user2
+			- user2s
+
+
+----playbook--
+ansible-playbook playbook.yml --check
+
+--- # comments one line
+- hosts: dev(group_name)/all
+  user: ansible
+  become: yes	- this makes ansbile sudo user
+  connection: ssh
+  gather_facts: yes
+  var: 
+	pkgname: httpd
+  task:
+	- name: install package
+	  action: yum name:'{{pkgname}}' state=present
+  task:
+	- name: desciption
+	  action: yum name:httpd state=present
+	  notify: restart httpd
+  handles:
+	- name: restart httpd (it sould be same as notify in task)
+	  action: service name=httpd state=restarted
+  tasks:
+	- name: add users in nodes
+	  user: name='{{item}}' state=present
+	  with_item:	
+		- user1
+		- user2
+		- user2s
+-----------------------------------------------------------
+
+https://www.youtube.com/watch?v=2UlTYJMi0YE&list=PLBGx66SQNZ8aPsFDwb79JrS2KQBTIZo10&index=35
+		   
+ansible conditions
+if we want to skip some commands on certian nodes.
+	task
+		- name: 
+		  command: apt -y instal apache2		=commands is in linux command
+		  when: ansible_os_family == "debian"
+encrpt playbook
+
+https://youtu.be/2UlTYJMi0YE?list=PLBGx66SQNZ8aPsFDwb79JrS2KQBTIZo10&t=1879
+
+
+
+
+
+==============================
+jenkins==similer tootls=>bamboo, buildboard, 
+CICD pipeline
+	0.plan=	github
+	1.code=	build- maven
+	2.test=	selenium	- once testing is done, jenkins will send that code to artifactory.
+	3.QA= checkstyle
+	4.deploy=	chef/puppet
+	5.operate=	
+	6.monitor= nagious
+integration tools=> jenkins	
+	jenkins takes the code and keep forwarding it to next step, when first step is complete.
+
+artifactory= it has the final code that is ready to use.
+
+jenkins have master/slave architecture.
+-------------
+jenkins lab
+download,git,java,maven,jenkins and configure
+
+download git for windows, configure git username and email.
+	git config --global user.name "mansoor"
+	git config --global user.email "mansoor@gmail.com"
+	git config --global --list
+step 2
+	download java development kit for windows and configure java, ###jenkins currently works with JDK 17 only. so download version 17
+		goto cmd type java -version to check java version
+	copy java path = C:\Program Files\Java\jdk-19
+	open start menu and type= system enviroment variable
+		click enviroment variable
+			click new in user variables tab
+			name = JAVE_HOME
+			path = path of jdk we just copied(C:\Program Files\Java\jdk-19)
+			Repeat same in system variable
+		open system enviroment variable again, click envirometn variable.
+			from system variable list, click on path, click new and enter = C:\Program Files\Java\jdk-19\bin
+			to test if path variable is defined correctly = win + r = enter %JAVE_HOME% = it will show you the path
+step 3 = download maven and configure for windows
+	https://maven.apache.org/download.cgi = Binary zip archive
+	extract to folder c:\devtools
+	open enviroment variables,click enviroment variable, only system variable add, 
+		name = M2_HOME
+		path = C:\Devtools\apache-maven-3.8.6
+	open eviroment variable again, click enviroment variable , click path from system variable list. 
+		click new = C:\Devtools\apache-maven-3.8.6\bin
+	to check if maven is installed, open cmd = mvn -verison
+step 4 = restart machine, and install jenkins and configuaration
+	download jenkins for windows from jenkins.io
+	install jenkins
+	open jenkins = localhost:8080 , install recommended plugins.
+		start new_project, enter name, select free style project.
+		goto build steps=>execute windows batch command=> echo "hello world"
+---------------jenkins lab------
+configure junkins=>plugins	
+	open localhost:8080
+	click manage jenkins=>	manage plugins=> available-tab=> 
+		select maven integration, green balls => install without restart
+	click global tools configuration
+		goto java tab, uncheck install automatically, provide JDK patk
+		goto maven tab, uncheck install automatically, provide path,
+download git repo
+	git clone https://github.com/mansoor128/time-tracker
+	open cmd goto downloaded directory=> mvn clean package
+
+now do this through jenkins.
+	open jenkins, name project, select maven project, enter git repo link in source code management, then in build> goals and options>clean package
+------
+source code polling=Poll SCM=> similer to schedule project
+	it will build project, when there is a change in the code.
+
+------jenkins------
+upstream linked project=>
+	in this method, after job is done, job will tell maven to proced to next process. 
+	post build actions => mention myMavenJob
+downstream linked jobs=>
+	in this method , maven will check, if the job is done, maven will do futher process.
+
+---
+for user management in jenkins => install plugin => Role-based Authorization Strategy
+for user management in jenkins => install plugin => Authorized project
+
+---jenkins master/slave concept
+	download agent.jar to c:\	- it is essential for master/slave
+	manage jenkins=>nodes+>new node=> provide name, select permanent agent,
+		provide root directory, launch agent via execution of cammnd on cotroller,
+		launch command => java -jar c:\agent.jar
+to make sure project is build in slave only, put a label in config of slave node, then add that label to the cofig of the project also.
+
+-------install jenkins in ubuntu---
+	install jenkins for ubuntu
+	https://pkg.jenkins.io/debian-stable/	
+	sudo apt-cache madison jenkins	- if you want to install older version of jenkins
+	apt update
+	sudo apt-cache search openjdk	- it will show all java versions
+		copy openjdk-17-jdk from list
+	sudo apt install openjdk-17-jdk
+--------------------
+MAVEN---- it is a project management tool for java--
+maven have similer workspace like git, 
+	maven - have local repo for dependencies, if not available it will go to remote repo, if not then it will go to central repo.
+
+	pom.xml	- main config file for maven
+		have all details of project configuration.
+		it is in home directory of project. 
+Pom.xml
+	it contains meta data
+	dependencies
+	kind of project
+	kind of output required.
+	every project would have one pom.xml file.
+	
+---maven life cycle---
+generate resource- if will pull all dependecies
+compile code
+unit test	- code
+package(build) - create jar file
+install
+deploy on client server
+clean	- maven clean package
+
+---------------------
+======DevOps Project========for windows===
+
+
+
+download git
+download java 17- and config java
+download maven and config
+download and install tomcat 
+install tomcat, and open jenkins in it
+	change connector port from 8080 to 8090 in server.xml in tomcat folder/conf
+	give admin authority to admin user. open tomcat-users.xml
+		line 22 = add after roles=manager-gui=>,manager-script'admin"
+			<user username="admin" password="admin" roles="manager-gui,manager-script'admin" />
+
+create folder c:\jenkinshome	=> Create system variable=> name: JENKINS_HOME, path: C:\jenkinshome
+open tomcat10w.exe from bin folder, and make service start automatic, restart computer
+copy jenkins.war to C:\Program Files\Apache Software Foundation\Tomcat 10.0\webapps
+now you can see jenkins in localhost:8080/manager/html
+	start jenkins
+
+download jenkins.war=>paste it tomacat server web apps=> localhost:8080/jenkins
+	goto localhost:8080 => click manage app
+
+
+
+clone git repo, from jenkins,
+create jobs in jenkins ==> if there is an error on any step, it will create a error.xml and send it to developer.
+	1. github pull=> (git plugin) just pull code from github
+	2. build and code review=>(ant/maven=for build - warning nextgen=for code review)
+	3. unit testing=>(junit plugin)=> if there is an error it will make an error.xml and send it to developer
+	4. deploy=> (deploy to container)=> it will deploy to tomcat.
+
+======DevOps Project========for windows===
+clone git repo, from jenkins,
+create jobs in jenkins ==> if there is an error on any step, it will create a error.xml and send it to developer.
+	1. github pull=> (git plugin) just pull code from github	- https://github.com/mansoor128/SampleWebApp
+		download plugin-github
+		create job=>free style
+		define workspace in advanced option( define a folder where it will work), provide github path
+	2. build and code review=>(ant/maven=for build - warning nextgen=for code review)
+		install plugin, maven , warning nextgen(code review)
+		create job=>free style
+			repeat github job steps
+		build = select maven/ant 
+		post build => select =record compiler warning
+			select tool=>checkstyle
+			in report file pattern=enter value=>checlstyle-result.xml
+		
+	3. unit testing=>(junit plugin)=> if there is an error it will make an error.xml and send it to developer
+		install junit realtime test reporter
+			repeat steps of above job.
+			build = selevt maven, then targets => junit
+		post build action=> publish junit test report.
+			in test reports xml tab = enter the name of file from git repository=> test calculator (change extention to xml)
+	4. deploy=> (deploy to container)=> it will deploy to tomcat.
+		install plugin deploy to container
+		create job deploy=> repeat steps
+			build=>maven/ant, target => war
+		post build action=>deploy war to container
+			in war/ear files tab enter => **/*.war
+	 		context path=> sameplewebapp
+			select container=> current tomcat version
+			credentials=> enter user and pass
+			in tomcat url= http://localhost:8090
+	5. install build pipeline plugin
+		click on first job,then configure, click post-build action => build other project=enter name of second job
+		repeat this in other two jobs, add post build action,
+=============================================
+continious monitoring=
+	1. define monitoring type,=> what to monitor
+	2. establish when to monitor=>
+	3. implement=>
+	4. Analyze data=> and find errors
+	5. respond => on error provided by data
+	
+==Nagios tools==
+why we need continious monitoring
+	failure in CI/CD pipeline, application failure, infrastructure failure, code failure.
+	nagios port: 5666-5667-5668
+	if condition changes, send notificatio=> yes,no, pending, critical,
+	
+how nagios works
+	install nagios on linux server=> monitor 
+		it has configuration files=> enter ip,user,pass of nodes
+	it will continuous monitor ports of nodes=> config these ports in configuration files.
+	nagios demon monitor these with=>NRPE from server=> check by ssh , plugin is required on nodes(nRP agetns) 
+	nagios has local database, and display it to webpage=?ip_address_of_server/nagios
+
+pre requisites of nagios
+	httpd, php, gcc gd compiler, makefile, perl
+	/user/local/nagios/etc/nagios.cfg	- main config file 
+	dashboard=> ip_address/nagios
+	service=>
+===nagios lab===
+step 1
+	sudo su
+	yum update
+	yum install httpd php -y
+	yum install gcc glibc glibc-common -y
+	yum install gd gd-devel -y
+	adduser -m nagios
+	passwd nagios
+	groupadd nagioscmd
+	usermod -a -G nagioscmd nagios
+	usermod -a -G nagioscmd apache
+download nagios core and plugins
+	mkdir ~/downloads
+	cd ~/downloads
+downlaod nagios and plugins in downloads 
+nagios	
+	wget https://yer.dl.sourceforge.net/project/nagios/nagios-4.x/nagios-4.0.8/nagios-4.0.8.tar.gz
+plugins
+	wget https://nagios-plugins.org/download/nagios-plugins-2.3.3.tar.gz
+now install after download
+unzip files in download.
+	tar zxvf nagios-4.0.8.tar.gz
+	cd nagios_folder
+config nagios
+run configuration script of nagios
+	./configure --with-command-group=nagioscmd
+compile source code	
+	make all
+install binaries
+	make install
+	make install-init	- initialize nagios
+	make install-config	- install configuration
+	make install-commandmode
+configure web interface
+	make install-webconf
+
+create a nagios account
+	htpasswd -c /usr/local/nagios/etc/htpasswd.users nagiosadmin
+		
+	service httpd restart
+install plugins
+	cd ~/downloads
+	tar zxvf nagios-plugins-2.0.3.tar.gz
+	cd nagios-plugins-2.0.3
+run configuration script of plugins
+	./configure --with-nagios-user=nagios --with-nagios-group=nagios
+
+	make
+	make install
+make sure nagios auto start with system
+	chkconfig --add nagios
+	chkconfig nagios on
+
+to varify that nagios is configured correctly, it will match first file with second file
+	/usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg
+		if it shows no error, then it is installed correctly
+start service
+	service nagios start
+	service httpd restart
+open ip_address of EC2
+	ip_address/nagios
+
+=======================
+====Kubernate===
+			Kubernate=>manifest
+kubernate components
+	Server side/master	
+		api server=>
+		Control manager=> it controls the pods, what is desired and what is provided.
+			cloud-controller-manager	- if we use cloud
+			kube-controller-manager		- if we use on premisis
+			node-controller		- if node response
+			route-controller	- responsible for ruting
+			service-controller	- responsible for load balancer
+			volume-controller	- attatching volumes
+		etcd cluster=> it has all the details of pods,(like a database), it can only be acccessed through api server	
+		kube schedulers=> it takes all the actions,which is provided by control manager.
+		user=> admin, we communicate with control manager through api server.
+		manifest=> the code send by user in => json, yaml
+	node side/slave
+		Kubelet=> it controls the pod and send/receive information to api server, 
+			it is a agent the communicate with api-server
+			port 10255
+			it creates pods=> succes/fails reporting
+		kube-proxy=> it controls the networking of pod.(only pod have network, not containers)
+			assign ip address to pods
+		container engine(docker)=> it need to be installed on both nodes and server.
+			pod=> the basic unit of kubernative,
+				if pod fails, its never get recovered, new needs to be created
+				higher level objects for pod and their functions	
+					replication set=> auto scaling and duplication
+					deployment=> versioning
+					service=> provide static ip to pod
+					volume=> non-ephemral storage (external storage)(outside the pod)	
+			kubectl=> command start for cloud
+			kubeadm=> command start for on premisis
+			kubefed=>	
+cluser=>master+nodes=>pods=>container
+------------------------------------
+=== kubernate - lab ====installation=====
+2-cpu 4gb-ram = master require
+
+install all these commands on both nodes and master
+	sudo su
+	apt-get update
+	apt-get install apt-transport-https	- we install this to make intra communation possible
+	#install docker
+		apt install docker.io -y
+		docker --version
+		systemctl start docker
+		systemctl enable docker
+	####sudo apt-get install -y ca-certificates curl
+	#setup gpg-key, it is used to authorize communication, install gpg-key,intra cluster communication
+		#####downloaded from kubernate website###sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+		####echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+		sudo curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add 
+	#download kubernative, but we dont install directly, we first copy the link to file, then we download through this file
+		nano /etc/apt/sources.list.d/kubernetes.list
+		paste this link in file=>	deb http://apt.kubernetes.io/ kubernetes-xenial main
+	apt-get update	- this will install the kubernative package we just downloaded.
+	apt-get install -y kubelet kubeadm kubectl kubernetes-cni
+Kubernative master commands only
+	bootstraping=> it is a process to connect nodes with master
+	BOOTSTRAPPING THE MASTER NODE
+		kubeadm init
+			it will show a code, copy it and keep it
+	after it will ask you to create a home directory, and copy config file
+		mkdir -p $HOME/.kube
+		cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+	provide user permision to config file	
+		chown $(id -u):$(id -g) $HOME/.kube/config
+	deploy flannel in master
+		#kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml
+		#kubectl apply -f https://github.com/coreos/flannel/raw/master/Documentation/kube-flannel.yml
+		kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+		kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/k8s-manifests/kube-flannel-rbac.yml
+configure kubernative nodes
+	copy code that was provided by master, and copy it in nodes and run
+kubernative master
+	to check if nodes are connected or not, run command
+		kubectl get nodes
+	#to check if pods are creating	
+		kubectl get pods
+# if nodes do not create pods
+	/run/flannel/subnet.env
+	#enter following commands in file and save
+		FLANNEL_NETWORK=10.244.0.0/16
+		FLANNEL_SUBNET=10.244.0.1/24
+		FLANNEL_MTU=1450
+		FLANNEL_IPMASQ=true
+------
+
+kubeadm join 10.1.0.4:6443 --token lehupc.pxahlmntxzo3v5zj \
+        --discovery-token-ca-cert-hash sha256:ac77f4582ace76dcbccafa3349f2556dffaa60521e4048b8c62cc86055405e51
+----------------------
+===kubernate objects===
+	manifest=> anything we write in manifest is known as single object,we write what we require.
+	any task or commands/process in manifest is known as object.
+	desired state=> it is written in menifest
+	actual state=> the resource provided by nodes
+	desired state <= control plain will try to maintain => actual state
+relationship between objects
+	pod manages container
+	replicasets manages pods
+	services expose pods to internet
+	states of object
+
+
+how to configure kubernative
+	minikube=> all-in-one-single-node/master (only for practice)
+minikube==> it is best for kubernative practice 
+	sudo su
+	apt update && apt -y install docker.io
+	apt update 
+	apt install docker.io
+	#install kubectl=> as this command is not available in ubuntu.
+		curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && chmod +x ./kubectl && sudo mv ./kubectl /usr/local/bin/kubectl
+	#install Minikube=> as this command is also not avaiable in ubuntu.
+		curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
+	# install conntrack as it is required to run minikube	
+		apt install conntrack
+	#start minikube
+		minikube start --vm-driver=none		- we are not loading any driver
+		minikune status
+	#kubectl commands
+		kubectl get nodes	- to get all nodes of kubernative
+		kubectl describe node ip-172.12.12.12
+	#Create a manifest	
+		nano pod1.yml
+	#apply kubectl command=> to create testpod (-f = forcefully)
+		kubectl apply -f pod1.yml
+	#to delete pod with yml file
+		kubectl delete -f pod1.yml
+	#to get all details of pods 
+		kubectl get pods -o wide
+	#to get details on container inside a pod 
+		kubectl logs -f testpod
+	#to get details on container inside a pod 
+		kubectl logs -f testpod -c -c00(container name)
+	# to get all pods info
+		kubectl get pods
+	# to get inside a pod, to do some working
+		kubectl exec testpod -it -c c00 -- /bin/bash
+			ps
+			ps -ef
+	# to get specific info on continer inside a pod
+		kubectl exec testpod -c c00 -- hostname -i
+		#kubectl exec pod_name -c(container) c00(container namer) -- hostname -i (host ip address)
+
+
+-----------------
+kind: Pod                              
+apiVersion: v1                     
+metadata:                           
+  name: testpod                  
+spec:                                    
+  containers:                      
+    - name: c00                     
+      image: ubuntu              
+      command: ["/bin/bash", "-c", "while true; do echo Hello-Bhupinder; sleep 5 ; done"]
+  restartPolicy: Never         # Defaults to Always
+-----------------
+	# to execute minifest file to create pods
+		kubectl apply -f pod1.yml
+		
+	# to get info on which node pod is created
+		kubectl get pods -o wide
+	# to get all info on pod
+		kubectl describe pod pod_name
+	# te get information on container inside a pod
+		kibectl logs -f pod_name
+	# to delete pod
+		kubectl delete pos pod_name
+		kubectl delete -f pod1.yml
+
+https://youtu.be/hV8zi3vdQqk?list=PLBGx66SQNZ8aPsFDwb79JrS2KQBTIZo10&t=3434
+--------------------------
+=========================
+kubernate troubleshoot
+	kubectl get nodes
+	kubectl describe node node_name
+	#to check status of pods and master
+		kubectl get pods -n kube-system
+
+
+ 
+
+-------------------------
+Labels,Selectors,ReplicationController and replicaset 
+we can put label on any object, it could be pod or node,we can put multiple label on one object.	
+and selector is used to select these objects
+label is in a key-value pair
+
+kubectl get pods --show-labels
+
+**Label manifest file***
+kind: Pod                              
+apiVersion: v1                     
+metadata:                           
+  name: testpod       
+	labels:
+		name: testing
+		companey: c1
+		anotherlabel: label1
+spec:                                    
+  containers:                      
+    - name: c00                     
+      image: ubuntu              
+      command: ["/bin/bash", "-c", "while true; do echo Hello-Bhupinder; sleep 5 ; done"]
+  restartPolicy: Never         # Defaults to Always
+************************************
+========Labels=================
+kubectl get pods --show-labels
+kubectl get nodes --show-labels
+# to give label to already created objects
+	kubectl label pods pod_name myname=testpod
+# to find objects with label name-pod1
+	kubectl get pods -l name=pod1
+# to find objects with label not name=pod1
+	kubectl get pods -l name!=pod1
+# to delete with label
+	kubectl delete pod -l name=pod1, comp=newcompaney
+-----------!!Selectors--------
+there are two types of selectors
+	equalty bases	- e.g name=maneoor
+	set based	- e.g to search in sets
+		in notin exists
+	kubectl get pods -l 'env in(development,testing)'
+---node selector----
+#if you want to create a pod on a perticuler node
+#first we need to tag nodes, then we can use node selector in menifest.
+
+spec:
+    containers:
+       - name: c00
+         image: ubuntu
+         command: ["/bin/bash", "-c", "while true; do echo Hello-Bhupinder; sleep 5 ; done"]
+    nodeSelector:                                         
+       hardware: t2-medium
+------scaling replication----
+# for replication we use replication controller in kind:replicationcontroller
+***********EXAMPLE OF REPLICATION CONTROLLER
+kind: ReplicationController	-#change kind of controller from pod to           ReplicationController	
+apiVersion: v1
+metadata:
+  name: myreplica
+spec:
+  replicas: 2		#define how much replica is required            
+  selector:        	#tell selector which pod to replicate myname: Bhupinder Rajput    
+    myname: Bhupinder Rajput                             
+  template:                # complete template what to create pod
+    metadata:
+      name: testpod6
+      labels:            
+        myname: Bhupinder Rajput
+    spec:
+     containers:
+       - name: c00
+         image: ubuntu
+         command: ["/bin/bash", "-c", "while true; do echo Hello-Bhupinder; sleep 5 ; done"]
+******************************
+#to get info of replica controller
+	kubectl get rc
+# to scale up/down
+	kubectl scale --replicas=8 rc -1 myname-bhupinder
+****replica set**
+# just change these two commands in menifest.
+	kind: Replicaset	-#change kind of controller from pod to           ReplicationController	
+	apiVersion: apps/v1
+
+# it works on both euality based and set based
+	kubectl scale --replicas=3 
+
+*****EXAMPLE OF REPLICA SET********
+#to get info of replica
+	kubectl get rs
+# to scale up/down
+	kubectl scale --replicas=3 rs/myrs
+************************
+kind: ReplicaSet                                    
+apiVersion: apps/v1                            
+metadata:
+  name: myrs
+spec:
+  replicas: 2  
+  selector:                  
+    matchExpressions:                             # these must match the labels
+      - {key: myname, operator: In, values: [Bhupinder, Bupinder, Bhopendra]}
+      - {key: env, operator: NotIn, values: [production]}
+  template:      
+    metadata:
+      name: testpod7
+      labels:              
+        myname: Bhupinder
+    spec:
+     containers:
+       - name: c00
+         image: ubuntu
+         command: ["/bin/bash", "-c", "while true; do echo Technical-Guftgu; sleep 5 ; done"]
+****************
+
+
+
+==============Deployment Object/Rollback in Kubernetes==========
+#we put deployment on replica-set
+# deployment will control replica-set
+# whenever we update, deployment will create a new replica-set, like v1 replca-set, v2-replica-set
+# deployment always communicate with replica-set, then replica-set reates pods.
+
+----Example to deployment------
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+   name: mydeployments
+spec:
+   replicas: 2
+   selector:     
+    matchLabels:
+     name: deployment
+   template:
+     metadata:
+       name: testpod
+       labels:
+         name: deployment
+     spec:
+      containers:
+        - name: c00
+          image: ubuntu
+          command: ["/bin/bash", "-c", "while true; do echo Technical-Guftgu; sleep 5; done"]
+----------------------
+# to rool back 
+	kubectl roolout undo deploy/object_name --to:
+
+	kubectl get deploy
+	kubectl describe deploy object_name
+	kubectl logs -f pod_name
+# to roll back to previous version
+	kubectl rollout status deployment object_name
+	kubectl rollout undo deploy/deployment_name
+# to scale up/down deployment
+	kubectl scale --replicas=2 deploy mydeployment
+# to get history of deployment
+	kubectl history deployment mydeployments
+# to run command inside a pod
+	kubectl exec pod_name --cat /etc/os-release
+
+#reasons  why deployments is failed
+
+----------Kubernetes Networking----------------
+Kubernetes Services, Nodeport and Volumes |
+
+#container to container communication in same pod
+	#create a pod.yml file	- create 2 contaners and check if they communicate or not.
+kind: Pod
+apiVersion: v1
+metadata:
+  name: testpod
+spec:
+  containers:
+    - name: c00
+      image: ubuntu
+      command: ["/bin/bash", "-c", "while true; do echo Hello-Bhupinder; sleep 5 ; done"]
+    - name: c01
+      image: httpd
+      ports:
+       - containerPort: 80
+# now enter first container
+	kubectl exec testpod -it -c c00 -- /bin/bash
+# insatall curl, and curl other contaner
+	curl localhost:80
+	# it will show that it is communication with other pod
+-----
+# container to container communcation in diffrent pods, but on the same node.
+	#create a pod1.yml file
+kind: Pod
+apiVersion: v1
+metadata:
+  name: testpod1
+spec:
+  containers:
+    - name: c01
+      image: nginx
+      command: ["/bin/bash", "-c", "while true; do echo Hello-Bhupinder; sleep 5 ; done"]
+      ports:
+	- containerPort: 80
+# create pod2.yml
+kind: Pod
+apiVersion: v1
+metadata:
+  name: testpod2
+spec:
+  containers:
+    - name: c02
+      image: httpd
+      ports:
+       - containerPort: 80
+# apply both pods 
+	kubectl apply -f pod1.yml
+	kubectl apply -f pod2.yml
+# get ip of both pods
+	kubectl get pods -o wide
+	curl ip_address:80 of pod
+--------
+---Kubernate Objects- service---
+#when a pod is deleted, and new pod is created, its ip  get changed, so user will not know the ip address of this pod,
+# to take care of this problem, we put a service on pods, that gives a virtual ip to pod, that is mapped to ip address of pod.
+# by default nodes do not allow access from outside the world.
+# servicess help expose ports to outside world, we use labels to expose ports.
+#service types
+	Cluster ip	-default
+	nodeport
+	loadbalancer
+	headless
+#service ports range- 30,000 - 32,767
+
+	#cluster ip - it is a ip provided to a cluster, then nodes inside that cluster communicate by port number with each other.
+		multiple nodes makes a cluster. an virtual ip will be provided to the cluster.
+		node1 and node2 will communicate with each otherby cluster ip,e.g ip_address:port_of_node1
+		clister ip works inside a cluster only
+	#nodeport is applied on cluster ip
+	#loadbalancer is applied on nodeport.
+
+
+LAB==
+# 
+#create a deploymenthttps.yml
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+   name: mydeployments
+spec:
+   replicas: 1
+   selector:      # tells the controller which pods to watch/belong to
+    matchLabels:
+     name: deployment
+   template:
+     metadata:
+       name: testpod1
+       labels:
+         name: deployment
+     spec:
+      containers:
+        - name: c00
+          image: httpd
+          ports:
+          - containerPort: 80
+# a deployment is created. with replica 1, if the pod is deleted and recreated, its ip will be changed, tso we create a service.
+####creating a service and binding its ip with the cluster ip#####
+# create a service.yml
+kind: Service                             # Defines to create Service type Object
+apiVersion: v1
+metadata:
+  name: demoservice
+spec:
+  ports:
+    - port: 80                               # Containers port exposed
+      targetPort: 80                     # Pods port
+  selector:
+    name: deployment                    # Apply this service to any pods which has the specific label
+  type: ClusterIP                       # Specifies the service type i.e ClusterIP or NodePort
+
+#apply kubecl serive
+	kubectl apply -f service.yml
+	kubectl get svc
+		#it will show an ip address of service. we can use this ip address to access the deployment pods.
+
+------to access node from outside world---
+# we use service nodeport for this
+# nodeport range 30,000-32,767
+first we access: nodeport=>virtual_ip=>cluster_ip=>node_ipaddress=>container
+# create nodeport.yml	- just change clusterip to nodeport
+kind: Service                             # Defines to create Service type Object
+apiVersion: v1
+metadata:
+  name: demoservice
+spec:
+  ports:
+    - port: 80                               # Containers port exposed
+      targetPort: 80                     # Pods port
+  selector:
+    name: deployment                    # Apply this service to any pods which has the specific label
+  type: Nodeport                       # Specifies the service type i.e ClusterIP or NodePort
+
+#to get service information
+kubectl get svc
+#to get all info on nodeport
+kubectl describe svc demoservice
+
+------Volumes--------
+# in kubernate a volume is created inside a pod, not in container.
+# if pod fail then volume is also deleted.
+# a volume inside a pod cannot be avialable for outside the pod.
+# volume types in pods
+	#NFS
+	#cloud provider
+	# distributed file system
+	#EmptyDir
+		# when a new pod is created, an EmptyDir volume is created. it is only shared with containers inside a pod.
+# create a manifest myvol.yml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myvolemptydir
+spec:
+  containers:
+  - name: c1
+    image: centos
+    command: ["/bin/bash", "-c", "sleep 15000"]
+    volumeMounts:                                    # Mount definition inside the container
+      - name: xchange
+        mountPath: "/tmp/xchange"          
+  - name: c2
+    image: centos
+    command: ["/bin/bash", "-c", "sleep 10000"]
+    volumeMounts:
+      - name: xchange
+        mountPath: "/tmp/data"
+  volumes:                                                   
+  - name: xchange
+    emptyDir: {}				# type of volume emptyDir
+# apply kubectl
+--Volume type 2--
+# share volume between pod and hostmachine.
+#create a hostvol.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myvolhostpath
+spec:
+  containers:
+  - image: centos
+    name: testc
+    command: ["/bin/bash", "-c", "sleep 15000"]
+    volumeMounts:
+    - mountPath: /tmp/hostpath
+      name: testvolume
+  volumes:
+  - name: testvolume
+    hostPath:
+      path: /tmp/data 	# this the path that is attatched to pods
+#  
+--------------------
+-------Persistent Volume and LivenessProbe in Kubernetes-----
+#Presistent volume is a cluster wide storage, it is a network shared storage.
+# we take a EBS and convert it to presistent volume
+	# we claim the storage from EBS, by make PV object
+		# we called it PV claim
+	# first we need to claim the storage in menifest, before mounting a volume, after that where ever system find suitable amount of storage, it will be mounted to your pod,
+	
+==LAB=>PV
+#Create a pvpod.yml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: myebsvol
+spec:
+  capacity:
+    storage: 1Gi	# it means 1 GB
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  awsElasticBlockStore:		# if we use azure, we will use azureEBS
+    volumeID:           # YAHAN APNI EBS VOLUME ID DAALO (AWS EBS ID)
+    fsType: ext4
+=
+#to get details on pv
+	kubrctl get pv	
+# now pv is created buy how do we claim it
+#create a new claim.yml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: myebsvolclaim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+--
+# now volume has been claimed, which means it can be used, now we definw, with which pod we use it,
+# now create a pod1.yml	
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pvdeploy
+spec:
+  replicas: 1
+  selector:      # tells the controller which pods to watch/belong to
+    matchLabels:
+     app: mypv
+  template:
+    metadata:
+      labels:
+        app: mypv
+    spec:
+      containers:
+      - name: shell
+        image: centos
+        command: ["bin/bash", "-c", "sleep 10000"]
+        volumeMounts:
+        - name: mypd
+          mountPath: "/tmp/persistent"
+      volumes:
+        - name: mypd
+          persistentVolumeClaim:
+            claimName: myebsvolclaim	# this is where we claimed the storage
+----
+# now we have created a container and claimed the storage @ /tmp/persistent folder.
+
+====Kubernate health check/LivenessProbe===> to check if app inside to container is working or not.
+# if LivenessProbe get result value other than 0 then container is not healthy.
+# we create a liveness.yml
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    test: liveness
+  name: mylivenessprobe
+spec:
+  containers:
+  - name: liveness
+    image: ubuntu
+    args:
+    - /bin/sh
+    - -c
+    - touch /tmp/healthy; sleep 1000
+    livenessProbe:                                          
+      exec:
+        command:                                         
+        - cat                
+        - /tmp/healthy
+      initialDelaySeconds: 5          
+      periodSeconds: 5                                 
+      timeoutSeconds: 30                              
+-----
+cat /tmp/healty
+echo $?		#to get status of command, if the status shows other than 0, pod will be recreated.
+=======================
+
+https://www.youtube.com/watch?v=I1w1o2LM4ws&list=PLBGx66SQNZ8aPsFDwb79JrS2KQBTIZo10&index=53
+
+
+
+
+
+
+
+
+
+
+
+----install minikube-----
+ Install Docker
+$  sudo apt update && apt -y install docker.io
+
+ Install kubectl
+$  curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl &&   chmod +x ./kubectl && sudo mv ./kubectl /usr/local/bin/kubectl
+
+ Install Minikube
+$  curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
+
+ Start Minikube
+$  apt install conntrack
+$  minikube start --vm-driver=none
+$  minikube status
+----------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+kubernate
+	first we create menifest, then apply this to cluster
+		
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+**********************************************************************************************************************************
+different kubernate manifest examples
+**********************************************************************************************************************************
+kind: Pod                              
+apiVersion: v1                     
+metadata:                           
+  name: testpod                  
+spec:                                    
+  containers:                      
+    - name: c00                     
+      image: ubuntu              
+      command: ["/bin/bash", "-c", "while true; do echo Hello-Bhupinder; sleep 5 ; done"]
+  restartPolicy: Never         # Defaults to Always
+
+
+
+
+
+
+
+
+********************************************
+kind: Pod                              
+apiVersion: v1                     
+metadata:                           
+  name: testpod1                  
+spec:                                    
+  containers:                      
+    - name: c00                     
+      image: ubuntu              
+      command: ["/bin/bash", "-c", "while true; do echo Hello-Bhupinder; sleep 5 ; done"]
+      env:                        # List of environment variables to be used inside the pod
+      - name: MYNAME
+        value: BHUPINDER
+    - name: c01
+      image: httpd
+      ports:
+       - containerPort: 80  
+
+  restartPolicy: Never         # Defaults to Always
+
+
+**********************************************************************************************************************************
+
+MULTI CONTAINER POD ENVIRONMENT 
+
+kind: Pod
+apiVersion: v1
+metadata:
+  name: testpod3
+spec:
+  containers:
+    - name: c00
+      image: ubuntu
+      command: ["/bin/bash", "-c", "while true; do echo Technical-Guftgu; sleep 5 ; done"]
+    - name: c01
+      image: ubuntu
+      command: ["/bin/bash", "-c", "while true; do echo Hello-Bhupinder; sleep 5 ; done"]
+
+
+*******************************************************************************************************************************
+POD ENVIRONMENT  VARIABLES
+
+
+kind: Pod
+apiVersion: v1
+metadata:
+  name: environments
+spec:
+  containers:
+    - name: c00
+      image: ubuntu
+      command: ["/bin/bash", "-c", "while true; do echo Hello-Bhupinder; sleep 5 ; done"]
+      env:                        # List of environment variables to be used inside the pod
+      - name: MYNAME
+        value: BHUPINDER
+
+**********************************************************************************************************************************
+POD WITH PORTS
+
+kind: Pod
+apiVersion: v1
+metadata:
+  name: testpod4
+spec:
+  containers:
+    - name: c00
+      image: httpd
+      ports:
+       - containerPort: 80  
+*****************************************************************
+
+
+
+
+

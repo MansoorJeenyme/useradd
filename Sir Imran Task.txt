@@ -1,0 +1,569 @@
+#goto .ssh folder and ssh servers
+	 ssh -i id_rsa -J mansoor@bastion.jeeny.me ec2-user@10.0.3.160
+# to run script without changing chown
+	bash script.sh
+# to check processes
+	ps aux | grep <username>
+# to check end of log file 
+	tail /var/log/cloud-init-output.log
+#save os name in variable
+	osver=$(egrep '^(NAME)=' /etc/os-release)
+	osver=$(egrep '^(VERSION|NAME)=' /etc/os-release)
+# Exit status of command (if it shows 0 then command run successfully)
+	echo $?
+# to get process running write ps command and use kill to kill that process
+	ps
+	kill id_of_process
+# get history of running commands
+	history	# this will show you list of commands
+	!23	# this will run the command from history, on which number it was run
+# to get logs running on terminal, -f in follow 
+	tail -f /path/log_file_name
+# to run a service on startup
+	sudo chkconfig mongod on
+# to check enviroment path 
+	echo $PATH
+#adding disk and partition on linux
+	# resize partition
+		lsblk
+		# try one of these commands and restart, to refresh table
+		resize2fs -f /dev/xvda1	
+		xfs_growfs /dev/xvda1
+		growpart /dev/xvda1 1
+		growpart [partition] [partition number]
+	# add a disk and format it xfs file system and mount
+		#to find xfx package as it was not available on repo
+		yum whatprovides xfs*
+		yum install xfxsprogs
+		#format disks
+			mkfs.xfs /dev/nvme1n1
+			mkfs.xfs /dev/name_of_block_storage
+			mkfs.xfs /dev/nvme2n1
+		# display mount points
+			df -h	
+		# add mount points
+			vi /etc/fstab
+			#	disk	folder		type
+				/dev/nvme1n1	/data	xfs	defaults	0	0
+				/dev/nvme2n1	/journal	xfs	defaults	0	0
+			#to mount drive
+			mount -a
+
+
+#to mount block storage in amazon linux and map it to monogd folders.
+	# To check if instance is logging any errors	
+		sudo tail -f /var/log/cloud-init-output.log
+		#find xfx package
+		yum whatprovides xfs*	# we look for xfx (name_containing) package as this package is no longer supported by amazon
+		yum install xfxsprogs
+	# to list block storages
+		lslbk
+	#format disks
+		mkfs.xfs /dev/name_of_block_storage
+		mkfs.xfs /dev/nvme1n1
+		mkfs.xfs /dev/nvme2n1
+	# display mount points
+		ds -h
+	# to list amazon-1 
+		ls -ltra
+	#create directory in os root
+		mkmdir journal	#chown mongo
+		mkdir data	#chown mongo
+	vi /etc/fstab
+		add mount points
+		disk	folder		type
+		/dev/nvme1n1	/data	xfs	defaults	0	0
+		/dev/nvme2n1	/journal	xfs	defaults	0	0
+	#to mount drive
+		mount -a
+
+# amazon download and install packages
+	# install certain package on amazon linux
+		yum --showduplicates list httpd | expand
+		sudo yum install <package name>-<version info>
+		sudo yum install httpd-2.4.6-6
+		sudo yum install httpd-2.4.6-6.fc20.x86_64
+	# download and install packages
+		yum --downloadonly <package>
+		yumdownloader <package>
+		# to install
+			yum localinstall <path to rpm>
+			# to download dependencies for package
+				yumdownloader --resolve <package>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#Task 1
+	make two ubuntu server machines, change ip address to 192.168.80.15/24
+	access other machine using ssh-key
+
+			# to check open ports
+				grep -w '80/tcp' /etc/services
+			#to show ip address
+				ip addr show
+			# to show all network interface of linum
+				ip link
+			# to check gateway
+				apt install net-tools
+				route -n
+			# ubuntu network config
+				https://linuxize.com/post/how-to-configure-static-ip-address-on-ubuntu-20-04/
+			#only if using cloud server - #disable network on ubuntu instance
+				sudo nano /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg
+				#enter this in file
+					network: {config: disabled}
+			# to assign ip address to ubuntu
+				sudo nano /etc/netplan/01-netcfg.yaml
+					# edit this file to disable dhcp and assign ip address			
+netplan route configuration
+	https://askubuntu.com/questions/1033747/ubuntu-18-04-network-card-with-two-ip-addresses
+
+# netplan debug
+	netplan --debug generate
+# network config file configuration
+
+
+# This is the network config written by 'subiquity'
+network:
+  ethernets:
+    enp0s3:
+      addresses:
+      - 192.168.80.15/24
+      gateway4: 192.168.80.1
+      nameservers:
+        addresses:
+        - 8.8.8.8
+        - 4.4.4.4
+        search: []
+  ethernets:
+    enp0s8:
+      addresses:
+      - 192.168.81.1/24
+  version: 2
+
+
+
+
+
+
+
+----------------							
+			# now to apply network changes
+				sudo netplan apply
+			# to show ip address of all interfaces
+				ip addr show
+			# to show the ip address of only single interface
+				ip addr show dev ens3
+			# first generate key on ubuntu server and then copy it to next machines
+			# to genrate key 
+				ssh-keygen
+			# to copy it to next machine	
+				ssh-copy-id user@ip
+			# now access other machine using key only
+				ssh user@ip_address
+			Task Complete
+------------
+Task 2
+install NginX and access it through host machine, by opening/forwading port 80
+	apt install nginx -
+	
+	deny 192.168.0.1;
+
+task Complete
+--------
+enginx configuration 
+	sudo nano /etc/nginx/nginx.conf
+https://owlhowto.com/how-to-block-any-ip-address-on-nginx/
+
+
+#change port nginx and index file path change
+	vi /etc/nginx/sites-enabled/default
+# the default directory of nginx configuration
+	vi /etc/nginx/sites-available/default
+
+
+
+#Block ip address nginx
+	sudo nano /etc/nginx/nginx.conf
+	#add the following line to block the ip address
+	deny IP adress;
+	example : deny 192.168.0.1;
+#to check if nginx config is working fine
+	sudo nginx -t
+# to get list of listening enginx ports
+	sudo netstat -napt igrep LIST
+
+
+
+
+
+
+
+-------------------------------
+create 3 machines
+
+https://www.digitalocean.com/community/tutorials/how-to-forward-ports-through-a-linux-gateway-with-iptables
+
+#change server name
+	hostnamectl set-hostname server
+	nano /etc/hosts
+		change host name to server
+#repeat on clients and change hostname to client1/2
+	hostnamectl set-hostname client
+	nano /etc/hosts
+
+# on server enable ip forwading
+	#enable ip forwading
+		sysctl net.ipv4.ip_forward
+		cat /proc/sys/net/ipv4/ip_forward
+		# if result is 0 the ip forwading is not allowed
+		#enable ip by any of following command
+		sysctl -w net.ipv4.ip_forward=1
+		echo 1 > /proc/sys/net/ipv4/ip_forward
+		#apply changes
+		sysctl -p
+	# add routes in routin table
+		# -o is the output inteface, -i is the input interface
+		iptables -t nat -A POSTROUTING -o ens33 -j MASQUERADE 
+		iptables -A FORWARD -i ens37 -o ens33 -j ACCEPT
+		route add 0.0.0.0/0 gw 192.168.80.1
+
+
+https://kifarunix.com/configure-ubuntu-20-04-as-linux-router/
+
+https://www.networkreverse.com/2020/06/how-to-build-linux-router-with-ubuntu.html
+
+
+-------------------------------
+Task - add user script -- done
+
+#!/bin/sh
+echo "enter username"
+read username
+#echo "enter key"
+#read pubkey
+sudo useradd -s /bin/bash -d /home/$username/ -m -G sudo $username
+echo $username'  ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+mkdir -p /home/$username/.ssh
+touch /home/$username/.ssh/authorized_keys
+pubkey="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDik9uSADk9ttSp/ugvUfCfnzjff0uJal33aO6by6uJJZgt3byddnqZpVdYN2YPLunZF8uIiWEtmgRXWREw8R/Ysl2Kq9B6KT1oBTBLwZ480M/EzSB26Kb6/S2yccwxaP9zn1cYe41eEdZBzX2hZrDAGHwrLBA9pShYal9xn+TICYkhT0a3C0LPVktDCUIxkiekRAfyByCaaUZiGGIX+72UNTnhAehz9hTqOxqXeVmzoXxZSM84alcemVGYoXpLK7/5xP8V099Iae3GjfJgSkl6OpXZNSVQm1iE/U/o+oHH0KYiq2oMClP+uIm3aEPwsKeENB64b3eCwFZvmMAyEjtPWVsEIYnrHTNHAVtDT9BoK/mC/NO+kJCAANxHXOmiodPyWeFYxLN0uItRq5zhYz9x3EIK1CAsljnJWl8yrk/xyjoTFo+Lzu/B80r7c1JxuG0zMyGDi9Zj+RdDpWgxz7Lllbt8mR+7vIe0iUwxZdngAGJ486P1omCbj5vGPiQPF68= Lenovo@DESKTOP-6MF07AB"
+echo $pubkey >> /home/$username/.ssh/authorized_keys
+
+#cat key.txt >> /home/$user/.ssh/authorized_keys
+#cat /path/to/pubkey >> /home/$user/.ssh/authorized_keys
+#chmod 700 /home/$user/.ssh
+#chmod 644 /home/$user/.ssh/authorized_keys
+#chown -R $user.$user /home/$user/.ssh
+
+#sudo useradd -s /path/to/shell -d /home/{dirname} -m -G {secondary-group} {username}
+# sudo passwd {username}
+
+
+
+--------------
+#install python
+	apt update
+	sudo apt install software-properties-common -y
+	sudo add-apt-repository ppa:deadsnakes/ppa
+	sudo apt update
+	sudo apt install python3.8
+	python3 --version
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+------
+share nfs with clients
+#first install nfs server on host
+	sudo apt update
+	sudo apt install nfs-kernel-server -y
+#make directories on server
+	sudo mkdir /var/nfs/general -p
+#change ownership of directories to nobody, so that it is accesable
+	ls -la /var/nfs/general
+	sudo chown nobody:nogroup /var/nfs/general
+# edit nfs export file on host	
+	sudo nano /etc/exports
+# add directories in export file
+	/var/nfs/general    192.168.80.12/24(rw,sync,no_subtree_check)
+	/home               192.168.80.12/24(rw,sync,no_root_squash,no_subtree_check)
+#rw=read/write, no_root= root access denied, no_subtree_check= wont check if file is removed on server or not.
+#restart nfs on host	
+	sudo systemctl restart nfs-kernel-server
+#open port from clients
+	sudo ufw allow from 192.168.80.12/24 to any port nfs
+	sudo ufw status
+	sudo exportfs -a
+# to see mount folders
+	showmount --exports
+	showmount --exports 10.10.10.2
+# if you see 
+	modprobe nfs
+	 mount -t nfsd
+	 mount t nfs
+
+
+# nfs package on clients
+	sudo apt update
+	sudo apt install nfs-common
+#create directories on client_ip
+	sudo mkdir -p /nfs/general
+	sudo mkdir -p /nfs/home
+#mount directories
+	sudo mount 192.168.80.11:/var/nfs/general /nfs/general
+	sudo mount 192.168.80.11:/home /nfs/home
+#to confirm if directories are mounted or not 
+	df -h
+# touch file in directories to check
+# mount directories on boot on client
+	sudo nano /etc/fstab
+# enter these lines
+	192.168.80.11:/var/nfs/general    /nfs/general   nfs auto,nofail,noatime,nolock,intr,tcp,actimeo=1800 0 0
+	192.168.80.11:/home               /nfs/home      nfs auto,nofail,noatime,nolock,intr,tcp,actimeo=1800 0 0
+#to unmount
+	sudo umount /nfs/home
+Task done
+------
+
+
+
+
+---
+add user to linuxi
+https://www.cyberciti.biz/tips/howto-write-shell-script-to-add-user.html#:~:text=The%20useradd%20command%2Fadduser%20command,running%20on%20Linux%20operating%20systems.
+
+# getnet passwd $user to check if user exist or not
+	if getent passwd $1 > /dev/null 2>&1; then
+# if command run succesfully $? will show 0
+	$?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+adduser -m john &&
+cd ~/.ssh/ && 
+rm -rf tmp_rsa* &&
+ssh-keygen -t rsa -b 4096 -C "john@email.com" -N '' -f john_rsa &&
+echo "#tmp_rsa" >> ~john/.ssh/authorized_keys &&
+cat john_rsa.pub >> ~john/.ssh/authorized_keys &&
+cat authorized_keys &&
+echo ">>> Done"
+
+add the public key provided by user to ~john/.ssh/authorized_keys (echo id_rsa.pub_provided_by_remote_user >> ~john/.ssh/authorized_keys)
+
+echo public_key_string >> ~/.ssh/authorized_keys
+
+
+
+
+
+
+#!/bin/bash
+read user
+useradd -m $user
+mkdir -p /home/$user/.ssh
+touch /home/$user/.ssh/authorized_keys
+cat key.txt >> /home/$user/.ssh/authorized_keys
+echo $user'  ALL=(ALL:ALL) ALL' >> /etc/sudoers
+
+
+
+
+create user by bash scripy
+
+#!/bin/bash
+
+for user in $( cat ./usernames ); do
+
+mkdir -p /home/$user/.ssh
+cat /path/to/pubkey >> /home/$user/.ssh/authorized_keys
+chmod 700 /home/$user/.ssh
+chmod 644 /home/$user/.ssh/authorized_keys
+chown -R $user.$user /home/$user/.ssh
+
+
+
+
+
+
+
+
+
+for i in $(cat users); do
+useradd $i
+chsh $i /usr/bin/ksh93
+echo "user $i added successfully!"
+echo $i 'ALL=(ALL)    NOPASSWD: ALL' >> /HAapps/sudoers
+echo $i:$i"123" | chpasswd
+echo "Password for user $i changed successfully"
+done
+============================
+# bash script loop
+
+	# !/bin/bash
+	# To declare static Array 
+	arr=(1 2 3 4 5)
+	
+	# loops iterate through a 
+	# set of values until the
+	# list (arr) is exhausted
+	for i in "${arr[@]}"
+	do
+		# access each element 
+		# as $i
+		echo $i
+	done
+=============
+# !/bin/bash
+user=(mansoor passkey, user2 passkey2 )
+for i in ${user[@]}
+do
+	echo $i
+
+done
+
+
+
+
+
+	getent passwd username
+
+
+if grep -q 'Ubuntu\|Debian' /etc/issue; then
+    adduser .....
+else
+    useradd .....
+fi
+
+-------------------------------------
+git task
+
+#configure git
+	git config --global User.name "Mansoor"
+	git config --global user.email "mansoor.rehman@jeeny.com"
+	git config --list
+	git config --global --list
+# make a git repo
+
+	git init
+	#after adding files
+	git add .
+	git status
+	git commot -m "bash script to add user"
+	git log
+	git show commit_id
+	git log --oneline
+#to upload on github
+	git remote remove URL
+	git remote add origin https://github.com/MansoorJeenyme/useradd
+	# to check remote URL
+	git remote -v
+	# to set origin URL
+	git remote set-url origin url
+	git remote set-url --push origin https://newurl
+
+
+	# push repo oneline
+	git push -u(user) Origin Master(branch name where u want to push code)
+	# if you are unable to push, run windows credential manager, and delete github credentials
+
+
+#git create branch
+	git checkout -b new_branch
+	git branch branch_name
+# to upstream branch
+	 git push --set-upstream origin production
+
+# to goto a branch
+	git checkout branch_name
+# to change branch as main
+	git -M main
+
+
+https://github.com/MansoorJeenyme
+
+# what is  a pull request
+	goto github>click pull request from top bar>click new pull request
+
+# study git workflow
+	https://www.youtube.com/watch?v=zr7MpE_Eb6A
+
+
+==================================
+jenkins declarative pipeline
+
+https://www.youtube.com/watch?v=f0Rbk1iVhnc
+https://www.youtube.com/results?search_query=declarative+pipeline+jenkins
+
+
+
+
+===================
+docker compose
+#install docker
+	apt install docker.io docker-compose -y
+#to start a wordpress in docker container with database and server.
+# first start a database
+	docker container run --name my-wordpress-database-server -e MYSQL_ROOT_PASSWORD=mypassword -d mysql:5.7	
+# the check ip_address of database server and put it in wordpress server
+	docker container inspect container_id
+	docker container run --name my-wordpress-server -e WORDPRESS_DB_HOST=172.17.0.1 -e WORDPRESS_DB_user=root -e WORDPRESS_DB_PASSWORD=mypassword -d wordpress
+
+	docker container ls	
+	docker network ls
+	docker volume ls
+
+
+----------
+
+
+
+
+
+
+
+

@@ -1,0 +1,33 @@
+galera is a master master cluster, in which all nodes are master
+# lab cluster control database
+    #create three machines
+    #generate ssh key on one server
+        ssh-keygen
+    # push to to all three servers
+        ssh-id-copy ip_address_of_server3
+        ssh-id-copy ip_address_of_server2
+        ssh-id-copy ip_address_of_server1(which is the same server you are logged in)
+
+
+https://www.youtube.com/watch?v=PFSkQNWKHjA&list=PL_c9BZzLwBRLO-HHp0XU3f9KSHR5Tc33c&index=8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

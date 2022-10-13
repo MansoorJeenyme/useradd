@@ -1,0 +1,32 @@
+add aws route 53 for mongoactivecustomer10 in internal.sa.easytaxi.com hostedzone. for mongodb database.
+    we made our mongo skeleton ready
+To add Route to AWS Route 53
+goto aws route 53 => hosted zones => internal.sa.easytaxi.com => Create Record.
+    Provice dns_name and ip address of node. and add Record.
+        mongoactivecustomer10.internal.sa.easytaxi.com  ip_address= 10.0.1.189
+        mongoactivecustomer20.internal.sa.easytaxi.com  ip_address= 10.0.3.195
+        mongoactivecustomer30.internal.sa.easytaxi.com  ip_address= 10.0.5.230
+        mongoactivecustomer40.internal.sa.easytaxi.com  ip_address= 10.0.1.253
+# after creating domains for nodes. we will curl to make sure routing is configured. login to primary node
+    ssh -J mansoor@bastion mansoor@mongoactivecustomer10.internal.sa.easytaxi.com
+    curl dns_name_of_node:27017
+    curl mongoactivecustomer10.internal.sa.easytaxi.com:27017
+    mongod
+# then we initiate replica set on primary node only, we follow convention of declaring node_name_10 as primary.
+    rs.initiate(
+        {
+		    _id: "rsActiveCustomer",
+			version: 1,
+			members: [
+		   		{ _id: 0, host : "mongoactivecustomer10.internal.sa.easytaxi.com:27017", priority: 5 },
+				{ _id: 1, host : "mongoactivecustomer20.internal.sa.easytaxi.com:27017" },
+				{ _id: 2, host : "mongoactivecustomer30.internal.sa.easytaxi.com:27017" }
+			]
+		}
+	)
+    # add hidden node in replica set
+        rs.add( { host: "mongoactivecustomer40.internal.sa.easytaxi.com:27017", hidden: true } )
+    # check status
+        rs.status()
+
+

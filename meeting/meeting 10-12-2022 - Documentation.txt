@@ -1,0 +1,38 @@
+Created a new role mongoactivecustomer.yaml from mongorideshistory.yaml, with three nodes +1 hidden(BI), each in different private subnet.
+
+Created three +1 hidden(BI) instances source=mongomemrideoffers310 , 
+	instance 1 = mongoactivecustomer10
+	instance 2 = mongoactivecustomer20
+	instance 3 = mongoactivecustomer30
+	instance 4 = mongoactivecustomer40
+	
+	
+	During installation block disks were not mounted by puppet on nodes
+		manually mounted blick disks
+			mounted two block storages,
+				mapped them to monogd directories data and journals.
+
+		ssh -i id_rsa -J mansoor@bastion mansoor@mongoactivecustomer10_ip_address
+		# listed block storages
+			lslbk
+		#located xfx package
+			yum whatprovides xfs*
+			yum install xfxsprogs
+		#format both block storages
+			mkfs.xfs /dev/nvme1n1
+			mkfs.xfs /dev/nvme2n1
+		# display mount points
+			df -h
+		# to list amazon-1 
+			ls -ltra
+		#create directory in os root
+			mkmdir journal		#chown mongod:mongod
+			mkdir data			#chown mongod:mongod
+		vi /etc/fstab
+			add mount points
+			disk	folder		type
+			/dev/nvme1n1	/data	xfs	defaults	0	0
+			/dev/nvme2n1	/journal	xfs	defaults	0	0
+		#to mount drive
+			mount -a
+

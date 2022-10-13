@@ -1,0 +1,72 @@
+our AWS zone Oregan, which is cheepest of all
+mongo cluster run on m5 large
+    we have reserved instances t3 8x large
+study EKS autoscaling
+Mongo db cluster   
+    we have 1xPrimary, 2xRead, 1Bi 
+        we have 4 clusters like above
+        which makes a total of 16 nodes
+ssh mongo instance  
+    type mongod
+        if system gives an error that means it is unable to understand the language, so we change language 
+            LC-ALL=C
+            now type mongod, it will run
+to check the status of nodes run command
+    rs.status
+    it will show all the nodes running with their status.
+    do check that timestamp is the same, as timestamp is the number of data in db. so there should be not more than 10, in the number of difference in each node.
+command run
+    show dbs
+    #if you see all salves in the cluster , run command rs.slaveOk() , it will automatically make one primary and other slave.
+we only give /data and /journal directories to mongo 
+to check mongo config 
+    name /cat/mongo-config
+tail -f /log/mongod-log
+df -h #to see the 
+ls -ltra
+ls -ltrah
+ls -htra
+
+# never run mongo from root user    
+#if you need to stop the service of mmongodb type,
+    service mongo stop
+    # always restart when stopping mongo service
+    reboot -o
+
+# to attatch volume to aws instance
+fdisk -l
+resize2fs
+
+# for continuous tail
+    tail -f
+
+
+#we have 2 disks attatched to each instance
+    block disk
+    block disk
+
+# to 
+
+# check what this command does
+    it shows the max size directory of linux file
+    ncdu /
+    ncdu
+    export 
+    !100    
+    find /~name mongo
+there is a cluster file in new relic, to generate new files for new instances to attatched with new relic
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

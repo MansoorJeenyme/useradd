@@ -1,0 +1,17 @@
+What is Scrum
+Product Owner(PO)=>Product Backlog(PO){it containts info requirement and features required to develp for app}
+=>Sprint Planning(SP){time box}{scrum team and PO discuss the time to develop initail viable product}
+=>Sprint Backlog(SB){it is the result of SP}{the planning with is discused in SP}
+=>Daily Scrum meeting(DS){every day we have a DS  to make a initail viable product }
+=>Potential shippable product increment(PSPT)
+=>Sprint Review(SR){product is reviewd by PO and Scrum team}
+=>Sprint Retrospective(SR){Scrum Master provide feedback on sprint}
+
+https://intellipaat.com/blog/tutorial/devops-tutorial/puppet-cheat-sheet/
+
+# puppet connection
+    on puppet master we have to sign slave certificate to authenticate slave access to server
+
+https://intellipaat.com/blog/tutorial/devops-tutorial/puppet-cheat-sheet/
+
+https://youtu.be/kHD4KQKKP5Y?t=902

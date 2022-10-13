@@ -1,0 +1,77 @@
+#online video jenkins setup =
+# install blue ocean plugin in jenkins, to make a code file of all your configuration
+https://www.youtube.com/watch?v=3IQrbUrb2E0
+    #afet installing jenkin on remote server
+    su -jenkins
+    ssh-keygen -t rsa 4096 -C"your_github@email.com"
+    #copy your publicc key and paste it in git hub
+    #goto github=> SSH and GPG keys
+        #add SSH key.
+    # now create another deploy server.
+    #now in nginx goto /var/www/yourwebsite/release/deploy
+                        ##### check if it is the correct directory #####/var/www/website/staging/current/storage
+        #create a soft link in this directory
+            ln -s current
+                                here create a link file .env (for enviroment variables)
+                            ln -s current_directory /var/www/staging/releases/deploy/.env
+        # in deploy directory create .env file
+        # now add user jenkins in deploy server, add ssh-key from jenkin server to deploy server
+            # add dependencies installed on jenkins to deploy server
+            #allow jenkins user to nopass access, on specific programs
+            sudo nano /etc/sudoers.d/jenkins
+                # add these lines
+                jenkins ALL=(ALL) NOPASSWD: /usr/sbin/service nginx *
+                jenkins ALL=(ALL) NOPASSWD: /usr/sbin/service php*-nfm *
+                jenkins ALL=(ALL) NOPASSWD: /bin/chmod 775 -R /var/www/website/staging/current/storage
+                jenkins ALL=(ALL) NOPASSWD: /bin/chmod 775 -R /var/www/website/production/current/storage
+    #go back to jenkins dashboard, install plugin publish over ssh, and restart jenkins
+    # after installation, click manage jenkins,configure systems, find ssh section in the tab and click.
+        #there click on add and enter path to your ssh-key
+            #hostname=ip_address_of_deploy_server, username=jenkins 
+            #remote directory=/var/www
+    # goto jenkins select free style project
+        #name project, select git as repository, select branch=staging
+        #now build section  
+            #build trigger
+                #select github hook trigger for polling
+            #build enviroment
+                #add timestamps to the console output
+            #Build execute shell
+                put all command that you want
+                composer install
+                cp .env.example .env
+                php artisan key:generate
+                php artisan migrate:refresh --seed
+                /vendor/bin/phpunit
+                truncate storage/logs/laravel.log --size 0
+        #post build section
+            #            
+
+
+
+
+
+
+
+setup jenkins remote server, install php or other language interpretor, install dependencies like composer.
+install jenkins on remote server,install bitbucket plugin
+    open new item, select free style project, for source code management, select bit bucket,
+        run the command it is showing under the bit bucket tab., add ssh key of this server to bit bucket website.
+            #first generate ssh key on server then, to add ssh-key in bitbucket
+                goto settings, then deployment keys, add key
+                #also add post hooks for this repo
+                goto hooks tab, select post, add hook,
+                    add url=>the domain/ip of jenkins server
+                        ip:port/url/build?token=token_declared_in_jenkins_job
+        #check option: Build when a change is pushed to bitbucket
+        #click add Build Step
+            execute shell command: 
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,44 @@
+to clean pupet node certificate
+	ssh -J live mansoor ip_address_puppet_server
+	puppet cert clean 
+# we have two puppet server they sync through rsync
+	puppet servers sync through rsync
+
+we updated a role mongoactivecustomer.yaml
+created a cluster similer to mongoridesactivecopy.yaml, with three nodes, each in different private subnet.
+	 installed package for linux filesystem.
+		mounted two block storages,
+			mapped them to monogd directories data and journals.
+
+ssh -i id_rsa -J mansoor@bastion mansoor@ec2_user
+
+
+# to list block storages
+	lslbk
+sudo tail -f /var/log/cloud-log-	Tab
+	#find xfx package
+	yum whatprovides xfs*
+	yum install xfxsprogs
+
+#format disks
+	mkfs.xfs /dev/nvme1n1
+	mkfs.xfs /dev/name_of_block_storage
+	mkfs.xfs /dev/nvme2n1
+# display mount points
+	df -h
+# to list amazon-1 
+	ls -ltra
+
+#create directory in os root
+	mkmdir journal	#chown mongo
+	mkdir data	#chown mongo
+
+vi /etc/fstab
+	add mount points
+	disk	folder		type
+	/dev/nvme1n1	/data	xfs	defaults	0	0
+	/dev/nvme2n1	/journal	xfs	defaults	0	0
+
+#to mount drive
+	mount -a
+
